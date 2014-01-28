@@ -1,0 +1,89 @@
+doctype html
+html(lang='en')
+head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='A layout example that shows off a responsive product landing page.')
+    title Fantasy League 2014
+    link(rel='stylesheet' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css')
+    link(rel='stylesheet' href='stylesheets/main.css')
+    link(rel='stylesheet' href='http://yui.yahooapis.com/pure/0.3.0/pure-min.css')
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+    script(src='javascripts/main.js')
+    script(src='http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.7.1.js')
+    link(rel='stylesheet' href='http://fonts.googleapis.com/css?family=Duru+Sans|Hammersmith+One')
+  body
+    
+    .header
+      .home-menu.pure-menu.pure-menu-open.pure-menu-horizontal.pure-menu-fixed
+        a.pure-menu-heading(href='') Fantasy League Draft 2014 alpha
+        ul
+          li.pure-menu-selected
+            a(href='#signup') Sign Up
+
+    .splash-container
+      .splash
+        h1.splash-head Welcome Fantasy Summoners
+        p.splash-subhead
+          | Become legendary
+        p
+          a.pure-button.pure-button-primary(href='#page2') Get Started
+    .content-wrapper
+      .content#page2
+        h2.content-head.is-center Exceptional Drafting for Exceptional People
+        .pure-g
+          .l-box.pure-u-1.pure-u-med-1-2.pure-u-lrg-1-4
+            h3.content-subhead
+              i.fa.fa-rocket
+              | Rock-solid scoring algorithms
+            p
+              | Developed by in-house statistical gurus, expect a nuanced and potent scoring system.
+          .l-box.pure-u-1.pure-u-med-1-2.pure-u-lrg-1-4
+            h3.content-subhead
+              i.fa.fa-clock-o
+              | Online 24/7
+            p
+              | Keep track of your score and make trades whenever you want.
+          .l-box.pure-u-1.pure-u-med-1-2.pure-u-lrg-1-4
+            h3.content-subhead
+              i.fa.fa-th-large
+              | Intuitive UI
+            p
+              | Intuitive UI is hassle-free and refreshing, enhancing your drafting experience.
+          .l-box.pure-u-1.pure-u-med-1-2.pure-u-lrg-1-4
+            h3.content-subhead
+              i.fa.fa-bar-chart-o
+              | Powerful and dynamic statistics
+            p
+              | Draft your team by the numbers. Develop your drafting strategy with compelling metrics and real-time statistics.
+      .ribbon.l-box-lrg.pure-g
+        .l-box-lrg.is-center.pure-u-1.pure-u-med-1-2.pure-u-lrg-2-5
+          img.pure-img-responsive(alt='League of Legends Championship Series', width='300', src='../public/images/lcslogo.png')
+        .pure-u-1.pure-u-med-1-2.pure-u-lrg-3-5
+          h2.content-head.content-head-ribbon Draft a team from the North American and European LCS
+          p
+            | Form your roster from 80 of the most dominant players in North America and Europe. Earn points every week based on the performance of your players. Compete with fellow fantasy summoners.
+      .content
+        h2.content-head.is-center Are you ready?
+        .pure-g
+          .l-box-lrg.pure-u-1.pure-u-med-2-5
+            form.pure-form.pure-form-stacked
+              fieldset
+                label(for='email') Your Summoner Name
+                input#email(type='text', placeholder='Summoner Name')
+                label(for='email') Your Email (no spam guarantee)
+                input#email(type='email', placeholder='Email')
+                label(for='password') Your Password
+                input#password(type='password', placeholder='Password')
+                button.pure-button#signup(type='submit') Sign Up
+          .l-box-lrg.pure-u-1.pure-u-med-3-5
+            h4 Contact Us
+            p
+              | 24
+            h4 
+      .footer.l-box.is-center
+        |#ost24
+    script(src='http://yui.yahooapis.com/3.14.1/build/yui/yui.js')
+
+
+    
