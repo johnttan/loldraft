@@ -3,6 +3,8 @@ players = require('./playerinfo').players
 updatescoregame = require('./scoreupdate').updatescoregame
 Schema = mongoose.Schema
 EventEmitter = require('events').EventEmitter
+passportLocalMongoose = require('passport-local-mongoose')
+
 
 _playergameSchema = new Schema(
     playergameid: {type: String, unique: true}
@@ -68,13 +70,10 @@ playerSchema = new Schema(
 
 
 userSchema = new Schema(
-    summoner: String,
     email: String,
-    password: String,
     roster: [{type: Number, ref: 'Player'}]
-
     )
-
+userSchema.plugin(passportLocalMongoose)
 
 latestgameSchema = new Schema(
     eu: Number
@@ -82,6 +81,25 @@ latestgameSchema = new Schema(
     id: {type:String, unique: true}
     )
 
+
+userSchema.static('sendgames', (req, res)->
+    callback = (err, user)->
+        rosterjson = {}
+        console.log(user)
+        if err != null
+            res.send(err)
+        else if user[0].roster.length == 0
+            res.send('noroster')
+        else
+            for player in user[0].roster
+                rosterjson[player.playername] = player
+
+            res.JSON(rosterjson)
+
+
+    this.find({"username": req.body.username}, callback)
+
+    )
 
 
 gameSchema.methods.updatescore = ()->
@@ -170,7 +188,7 @@ gameSchema.methods.addplayerstat = (playerstat)->
 
 Game = mongoose.model('Game', gameSchema)
 
-User = mongoose.model('User', gameSchema)
+User = mongoose.model('User', userSchema)
 
 Player = mongoose.model('Player', playerSchema)
 

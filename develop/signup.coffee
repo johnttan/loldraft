@@ -1,4 +1,4 @@
-query = require('/models/queries')
+query = require('./models/queries')
 
 
 module.exports = ()->

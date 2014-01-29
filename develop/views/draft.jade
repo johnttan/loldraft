@@ -1,15 +1,5 @@
-doctype html
-html(lang='en')
-head
-    meta(charset='utf-8')
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    meta(name='description', content='A layout example with a side menu that hides on mobile, just like the Pure website.')
-    title Side Menu – Layout Examples – Pure
-    link(rel='stylesheet', href='http://yui.yahooapis.com/pure/0.3.0/pure-min.css')
-    link(rel='stylesheet' href='http://fonts.googleapis.com/css?family=Duru+Sans|Hammersmith+One')
-    link(rel='stylesheet', href='stylesheets/side-menu.css')
-    link(rel='stylesheet', href='stylesheets/main.css')
   body
+    link(rel='stylesheet', href='stylesheets/side-menu.css')
     #layout
       //
          Menu toggle 
@@ -19,7 +9,7 @@ head
         span
       #menu
         .pure-menu.pure-menu-open
-          a.pure-menu-heading(href='#') Ostonzi
+          a.pure-menu-heading(href='#') #{name}
           ul
             li
               a(href='#') Team
@@ -30,5 +20,3 @@ head
             li
               a(href='#') Trading
       #main
-        
-    script(src='javascripts/main.js')

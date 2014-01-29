@@ -6,17 +6,17 @@ kdascore = (kills, deaths, assists, role) ->
         k: kills
         d: deaths
         a: assists
-    
-    if role == 'top'
-        score = math.eval('0.5 * ((2*k + a)/(d + 10))', scope)
-    else if role == 'jungle'
-        score = math.eval('0.5 * ((2*k + 2*a)/(d + 10))', scope)
-    else if role == 'mid'
-        score = math.eval('0.5 * ((2*k + a)/(d + 10))', scope)
-    else if role == 'adc'
-        score = math.eval('0.5 * ((2*k + a)/(d + 10))', scope)
-    else if role == 'support'
-        score = math.eval('0.5 * ((1.5*k + 2*a)/(d + 10))', scope)
+    switch role
+        when 'top'
+            score = math.eval('0.5 * ((2*k + a)/(d + 10))', scope)
+        when 'jungle'
+            score = math.eval('0.5 * ((2*k + 2*a)/(d + 10))', scope)
+        when 'mid'
+            score = math.eval('0.5 * ((2*k + a)/(d + 10))', scope)
+        when 'adc'
+            score = math.eval('0.5 * ((2*k + a)/(d + 10))', scope)
+        when 'support'
+            score = math.eval('0.5 * ((1.5*k + 2*a)/(d + 10))', scope)
 
     return score
 
@@ -39,11 +39,11 @@ csscore = (cs, oppcs, role) ->
     scope = 
         cs: cs
         oppcs: oppcs
-
-    if role == 'top' || role == 'jungle' || role == 'mid'
-        score = math.eval('cs/(200 + oppcs)', scope)
-    else if role == 'adc' || role == 'support'
-        score = math.eval('cs/(75 + oppcs)', scope)
+    switch role
+        when 'top', 'jungle', 'mid'
+            score = math.eval('cs/(200 + oppcs)', scope)
+        when 'adc', 'support'
+            score = math.eval('cs/(75 + oppcs)', scope)
 
     return score
 
@@ -52,7 +52,7 @@ goldscore = (gold, oppgold) ->
         gold: gold
         oppgold: oppgold
 
-    score = math.eval('(10 * (gold - oppgold)) / (gold + oppgold)', scope)
+    score = math.eval('(5 * (2*gold - oppgold)) / (gold + oppgold)', scope)
 
     return score
 

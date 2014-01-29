@@ -61,7 +61,7 @@ updatescoreplayer = (playerstat, game) ->
     if playerstat.deaths == 0
         scorejson.nodeathscore = 0.2
 
-    scorejson.totalscore = scorejson.kdascore + scorejson.partscore + scorejson.csscore + scorejson.winscore + scorejson.nodeathscore
+    scorejson.totalscore = scorejson.kdascore + scorejson.partscore + scorejson.csscore + scorejson.winscore + scorejson.nodeathscore + scorejson.goldscore
     game.model('Game').findOneAndUpdate(
         {
             gameid: game.gameid,

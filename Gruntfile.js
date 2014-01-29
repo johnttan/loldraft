@@ -9,11 +9,32 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'deploy/public/javascripts/main.js': 'develop/public/javascripts/*.coffee',
-                    'deploy/routes/*.js': 'develop/routes/*.coffee',
-                    'deploy/models/*.js': 'models/*.coffee',
-                    'deploy/app.js': 'develop/app.coffee'
                 }
-            }
+            },
+            glob_to_multiple: {
+                expand: true,
+                flatten: true,
+                cwd: 'develop/routes/',
+                src: ['*.coffee'],
+                dest: 'deploy/routes/',
+                ext: '.js'
+                },
+            glob_to_multiple1: {
+                expand: true,
+                flatten: true,
+                cwd: 'develop/models/',
+                src: ['*.coffee'],
+                dest: 'deploy/models/',
+                ext: '.js'
+                },
+            glob_to_multiple2: {
+                expand: true,
+                flatten: true,
+                cwd: 'develop/',
+                src: ['*.coffee'],
+                dest: 'deploy/',
+                ext: '.js'
+                }
         },
 
         stylus: {
@@ -25,7 +46,7 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'deploy/public/stylesheets/main.css': 'develop/public/stylesheets/main.styl',
-                    'deploy/public/stylesheets/side-menu.css': 'develop/public/stylesheets/side-menu.styl'
+                    
                 }
 
             }
@@ -39,9 +60,21 @@ module.exports = function(grunt) {
                     }
                 },
                 files: {
-                    "deploy/public/index.html":["develop/views/index.jade"],
-                    "deploy/public/draft.html":["develop/views/draft.jade"]
+                    "deploy/views/draft.html":["develop/views/draft.jade"]
                 }
+            }
+        },
+
+        copy: {
+            main:{
+                files: [
+                {
+                    src: 'develop/views/index.jade',
+                    dest:'deploy/views/index.jade'
+                }
+
+                ]
+                
             }
         },
 
@@ -68,36 +101,36 @@ module.exports = function(grunt) {
             }
         },
 
-        htmlmin: {
-            dist: {
-                options: {
-                    removeComments: true,
-                    collapseWhitespace: true
-                },
-                files: {
-                    'deploy/views/index.html': 'deploy/views/index.html'
-                }
-            }
-        },
+        // htmlmin: {
+        //     dist: {
+        //         options: {
+        //             removeComments: true,
+        //             collapseWhitespace: true
+        //         },
+        //         files: {
+        //             'deploy/views/index.html': 'deploy/views/index.html'
+        //         }
+        //     }
+        // },
 
         watch: {
 
          
             livereload: {
                 options: {livereload: true},
-                files: ['deploy/public/**/*', 'deploy/views/*.html']
+                files: ['deploy/public/**/*', 'deploy/views/*.jade']
             },
             scripts: {
-                files: ['develop/public/javascripts/*.coffee', 'develop/routes/*.coffee', 'develop/app.coffee'],
+                files: ['develop/public/javascripts/*.coffee', 'develop/routes/*.coffee', 'develop/*.coffee', 'develop/models/*.coffee'],
                 tasks: ['coffee']
             },
             styles: {
                 files: ['develop/public/stylesheets/*.styl'],
                 tasks: ['stylus']
             },
-            html: {
+            copy: {
                 files: ['develop/views/*.jade'],
-                tasks: ['jade']
+                tasks: ['copy']
             }
         }
 
@@ -106,11 +139,12 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-stylus');
-    grunt.loadNpmTasks('grunt-contrib-jade')
+    grunt.loadNpmTasks('grunt-contrib-jade');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
     grunt.registerTask('default', ['watch'])
     grunt.registerTask('deploy', ['uglify, cssmin', 'htmlmin'])
