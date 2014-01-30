@@ -71,7 +71,7 @@ playerSchema = new Schema(
 
 userSchema = new Schema(
     email: String,
-    roster: [{type: Number, ref: 'Player'}]
+    roster: [{type: Schema.Types.ObjectId, ref: 'Player'}]
     )
 userSchema.plugin(passportLocalMongoose)
 

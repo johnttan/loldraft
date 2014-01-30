@@ -1,22 +1,30 @@
-  body
-    link(rel='stylesheet', href='stylesheets/side-menu.css')
-    #layout
-      //
-         Menu toggle 
-      a#menuLink.menu-link(href='#menu')
-        //
-           Hamburger icon 
-        span
-      #menu
-        .pure-menu.pure-menu-open
-          a.pure-menu-heading(href='#') #{name}
-          ul
-            li
-              a(href='#') Team
-            li
-              a(href='#') Schedule
-            li.menu-item-divided.pure-menu-selected
-              a(href='#') Statistics
-            li
-              a(href='#') Trading
-      #main
+
+body
+  link(rel='stylesheet', href='stylesheets/side-menu.css')
+  link(rel='stylesheet', href='stylesheets/override.css')
+  #layout
+
+    a#menuLink.menu-link(href='#menu')
+
+      span
+    #menu
+      .pure-menu.pure-menu-open
+        a.pure-menu-heading#name(href='#') #{name}
+        ul
+          li.menu-item-divided.pure-menu-selected
+            a(href='#roster') Roster
+          li
+            a(href='#sched') Schedule
+          li
+            a(href='#stats') Statistics
+          li
+            a(href='#trade') Trading
+        footer.contact
+            a(href='#contact') Contact Us
+        footer.terms
+            a(href='#contact') Terms of Service
+    #main
+      include roster
+
+
+

@@ -46,24 +46,14 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'deploy/public/stylesheets/main.css': 'develop/public/stylesheets/main.styl',
+                    'deploy/public/stylesheets/override.css': 'develop/public/stylesheets/override.styl',
+                    'deploy/public/stylesheets/side-menu.css': 'develop/public/stylesheets/side-menu.styl'
                     
                 }
 
             }
         },
 
-        jade: {
-            compile: {
-                options: {
-                    data: {
-                        debug: false
-                    }
-                },
-                files: {
-                    "deploy/views/draft.html":["develop/views/draft.jade"]
-                }
-            }
-        },
 
         copy: {
             main:{
@@ -71,6 +61,14 @@ module.exports = function(grunt) {
                 {
                     src: 'develop/views/index.jade',
                     dest:'deploy/views/index.jade'
+                },
+                {
+                    src: 'develop/views/draft.jade',
+                    dest:'deploy/views/draft.jade'
+                },
+                {
+                    src: 'develop/views/roster.jade',
+                    dest:'deploy/views/roster.jade'
                 }
 
                 ]

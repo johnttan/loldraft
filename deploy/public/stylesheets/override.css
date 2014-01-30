@@ -1,0 +1,8 @@
+#signupheader :hover{background-color:transparent}
+#menu{margin-top:55px}
+a.pure-menu-heading#name{background:#7fc028}
+.contact{position:fixed;bottom:43px}
+.terms{position:fixed;bottom:0}
+hr.fancy-line1{height:4px;background-color:#7fc028;width:50%}
+hr.fancy-line1{border:0;background:-webkit-gradient(linear, left bottom, right top, color-stop(0, #fff), color-stop(0.5, #7fc028), color-stop(1, #fff));background:-moz-linear-gradient(bottom left, #fff 0%, #7fc028 50%, #fff 100%);background:-webkit-linear-gradient(bottom left, #fff 0%, #7fc028 50%, #fff 100%);background:-o-linear-gradient(bottom left, #fff 0%, #7fc028 50%, #fff 100%);background:-ms-linear-gradient(bottom left, #fff 0%, #7fc028 50%, #fff 100%);background:linear-gradient(bottom left, #fff 0%, #7fc028 50%, #fff 100%)}
+.stat{margin-left:auto;margin-right:auto}

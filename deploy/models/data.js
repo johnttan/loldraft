@@ -94,7 +94,7 @@
     email: String,
     roster: [
       {
-        type: Number,
+        type: Schema.Types.ObjectId,
         ref: 'Player'
       }
     ]

@@ -5,8 +5,47 @@
       e.preventDefault();
       return $('.contactus').html('team@fantasylol.net');
     });
+    $('#signupheader').click(function(e) {
+      e.preventDefault();
+      return $.ajax({
+        data: {
+          username: 'lol',
+          password: 'lol'
+        },
+        url: '/login',
+        cache: false,
+        type: "POST",
+        datatype: 'json',
+        success: processRegistration,
+        error: function(jqxr, status, error) {
+          $('.registrationfail').html('Server error, try again?');
+          return console.log(jqxr.responseText);
+        }
+      });
+    });
     processRegistration = function(data) {
-      return console.log('success?');
+      var animatelogout, fadeindraft;
+      animatelogout = function() {
+        return $('#signupheaderchild').fadeOut(50, function() {
+          $(this).html("Logout");
+          return $(this).fadeIn(50);
+        });
+      };
+      fadeindraft = function() {
+        $('.deck').html(data);
+        $('.deck').fadeIn();
+        return $('#menu').animate({
+          'margin-top': '39px'
+        });
+      };
+      $('.deck').fadeOut(200, fadeindraft);
+      return $('.pure-menu-horizontal').animate({
+        padding: 0
+      }, {
+        duration: 500,
+        easing: 'linear',
+        complete: animatelogout
+      });
     };
     return validator = $('#signupform').validate({
       debug: true,

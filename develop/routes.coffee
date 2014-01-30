@@ -21,26 +21,22 @@ module.exports = (app)->
                 (err, account)->
                     if(err)
                         if err.message == 'User already exists with name ' + req.body.username
-                            console.log('user exists. logging in')
-                            passport.authenticate('local')(req, res,
-                                ()->
-                                    res.render('draft.jade', {name: req.user.username})
-
-                            )
+                            res.send(404, err)
+                            
                         else
                             console.log(err)
                             res.send(404, err)
                     else
-                        passport.authenticate('local')(req, res,
-                            ()->
-                                res.render('draft.jade', {name: req.user.username})
-
-                            )
-
-                    )
+                        console.log('registered, logging in ' + account)
+                        req.login(account, (err)->
+                                res.render('draft.jade', {name: account.username})
+                        )
+                            
+            )
+    
         catch error
             res.send(404, error)
-        )
+    )
 
 
     app.post('/login', passport.authenticate('local'),
@@ -58,7 +54,6 @@ module.exports = (app)->
             else if doc
                 res.send('null')
             else
-                console.log('sending true')
                 res.send(true)
             )
 

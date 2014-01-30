@@ -26,20 +26,16 @@
         }), req.body.password, function(err, account) {
           if (err) {
             if (err.message === 'User already exists with name ' + req.body.username) {
-              console.log('user exists. logging in');
-              return passport.authenticate('local')(req, res, function() {
-                return res.render('draft.jade', {
-                  name: req.user.username
-                });
-              });
+              return res.send(404, err);
             } else {
               console.log(err);
               return res.send(404, err);
             }
           } else {
-            return passport.authenticate('local')(req, res, function() {
+            console.log('registered, logging in ' + account);
+            return req.login(account, function(err) {
               return res.render('draft.jade', {
-                name: req.user.username
+                name: account.username
               });
             });
           }
@@ -64,7 +60,6 @@
         } else if (doc) {
           return res.send('null');
         } else {
-          console.log('sending true');
           return res.send(true);
         }
       });

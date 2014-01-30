@@ -1,34 +1,30 @@
-doctype html
-html(lang='en')
-head
-    meta(charset='utf-8')
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    meta(name='description', content='A layout example with a side menu that hides on mobile, just like the Pure website.')
-    title Side Menu – Layout Examples – Pure
-    link(rel='stylesheet', href='http://yui.yahooapis.com/pure/0.3.0/pure-min.css')
-    link(rel='stylesheet' href='http://fonts.googleapis.com/css?family=Duru+Sans|Hammersmith+One')
-    link(rel='stylesheet', href='stylesheets/side-menu.css')
-    link(rel='stylesheet', href='stylesheets/main.css')
-  body
-    #layout
-      //
-         Menu toggle 
-      a#menuLink.menu-link(href='#menu')
-        //
-           Hamburger icon 
-        span
-      #menu
-        .pure-menu.pure-menu-open
-          a.pure-menu-heading(href='#') Ostonzi
-          ul
-            li
-              a(href='#') Team
-            li
-              a(href='#') Schedule
-            li.menu-item-divided.pure-menu-selected
-              a(href='#') Statistics
-            li
-              a(href='#') Trading
-      #main
-        
-    script(src='javascripts/main.js')
+
+body
+  link(rel='stylesheet', href='stylesheets/side-menu.css')
+  link(rel='stylesheet', href='stylesheets/override.css')
+  #layout
+
+    a#menuLink.menu-link(href='#menu')
+
+      span
+    #menu
+      .pure-menu.pure-menu-open
+        a.pure-menu-heading#name(href='#') #{name}
+        ul
+          li.menu-item-divided.pure-menu-selected
+            a(href='#roster') Roster
+          li
+            a(href='#sched') Schedule
+          li
+            a(href='#stats') Statistics
+          li
+            a(href='#trade') Trading
+        footer.contact
+            a(href='#contact') Contact Us
+        footer.terms
+            a(href='#contact') Terms of Service
+    #main
+      include roster
+
+
+

@@ -1,17 +1,19 @@
 doctype html
 html(lang='en')
-head
+  head
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(name='description', content='League of Legends Fantasy Draft')
-    title Fantasy League 2014
+    title Fantasy League 2014 Alpha
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
     link(rel='stylesheet' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css')
     link(rel='stylesheet' href='stylesheets/main.css')
     link(rel='stylesheet' href='http://yui.yahooapis.com/pure/0.3.0/pure-min.css')
-    script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
     script(src='http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js')
     script(src='javascripts/main.js')
+
     script(src='http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.7.1.js')
+
     link(rel='stylesheet' href='http://fonts.googleapis.com/css?family=Duru+Sans|Hammersmith+One')
   body
     
@@ -20,8 +22,8 @@ head
         a.pure-menu-heading(href='') Fantasy League Draft 2014 alpha
         ul
           li#signupheader
-            a(href='') Login
-    .div.deck
+            a#signupheaderchild(href='') Login
+    div.deck
       .splash-container
         .splash
           h1.splash-head Welcome Fantasy Summoners
@@ -85,7 +87,7 @@ head
               h4 
       .footer.l-box.is-center
         |#ost24
-    script(src='http://yui.yahooapis.com/3.14.1/build/yui/yui.js')
+    link(rel='stylesheet' href='stylesheets/override.css')
 
 
     

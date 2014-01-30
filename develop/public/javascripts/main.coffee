@@ -6,9 +6,51 @@ $ ->
             $('.contactus').html('team@fantasylol.net')
         )
 
+    $('#signupheader').click(
+        (e)->
+            e.preventDefault()
+            $.ajax(
+                data: {username: 'lol', password: 'lol'}
+                url: '/login'
+                cache: false
+                type: "POST"
+                datatype: 'json'
+                success: processRegistration
+                error: (jqxr, status, error)->
+                    $('.registrationfail').html('Server error, try again?')
+                    console.log(jqxr.responseText)
+            
+            ))
+
+
 
     processRegistration = (data) ->
-        console.log('success?')
+        animatelogout = ()->
+            $('#signupheaderchild').fadeOut(50, ()->
+                $(this).html("Logout")
+                $(this).fadeIn(50)
+                )
+        fadeindraft = ()->
+            $('.deck').html(data)
+            $('.deck').fadeIn()
+            $('#menu').animate({'margin-top':'39px'})
+        $('.deck').fadeOut(200, fadeindraft)
+        $('.pure-menu-horizontal').animate({
+            padding: 0
+            },
+            {
+                duration: 500
+                easing: 'linear'
+                complete: animatelogout
+            }
+            )
+
+        
+
+
+        
+
+
         
 
     validator = $('#signupform').validate({
