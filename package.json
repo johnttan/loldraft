@@ -14,7 +14,12 @@
     "request":"*",
     "jsdom": "*",
     "mathjs": "*",
-    "async": "*"
+    "async": "*",
+    "passport-local-mongoose": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "validator": "*",
+    "connect-ensure-login": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
@@ -44,6 +49,7 @@
     "grunt-contrib-stylus": "~0.11.0",
     "grunt-nodemon": "~0.1.2",
     "grunt-contrib-csslint": "~0.2.0",
-    "grunt-contrib-jade": "*"
+    "grunt-contrib-jade": "*",
+    "grunt-contrib-copy": "*"
   }
 }

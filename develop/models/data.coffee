@@ -3,6 +3,8 @@ players = require('./playerinfo').players
 updatescoregame = require('./scoreupdate').updatescoregame
 Schema = mongoose.Schema
 EventEmitter = require('events').EventEmitter
+passportLocalMongoose = require('passport-local-mongoose')
+
 
 _playergameSchema = new Schema(
     playergameid: {type: String, unique: true}
@@ -36,6 +38,7 @@ _playergameSchema.set('_id', false)
 
 gameSchema = new Schema(
     gameid: {type: Schema.Types.Mixed, unique: true},
+    gameidnoregion: Number
     players: [_playergameSchema]
     gamelength: Number
     region: String
@@ -62,19 +65,28 @@ playerSchema = new Schema(
     totalwinscore: Number,
     totalMVPscore: Number,
     totalscore: Number,
+    mostrecentgameid: Number
+    mostrecentgame: {type: Schema.Types.ObjectId, ref: 'Game'}
     gamesplayed: [{type: Schema.Types.ObjectId, ref: 'Game'}]
     )
 
 
 
 userSchema = new Schema(
-    summoner: String,
     email: String,
-    password: String,
-    roster: [{type: Number, ref: 'Player'}]
-
+    roster: 
+        top:
+            {type: Schema.Types.ObjectId, ref: 'Player'}
+        mid:
+            {type: Schema.Types.ObjectId, ref: 'Player'}
+        jungle:
+            {type: Schema.Types.ObjectId, ref: 'Player'}
+        adc:
+            {type: Schema.Types.ObjectId, ref: 'Player'}
+        support:
+            {type: Schema.Types.ObjectId, ref: 'Player'}
     )
-
+userSchema.plugin(passportLocalMongoose)
 
 latestgameSchema = new Schema(
     eu: Number
@@ -83,11 +95,34 @@ latestgameSchema = new Schema(
     )
 
 
+userSchema.static('sendgames', (req, res)->
+    callback = (err, user)->
+        console.log(user)
+        if err != null
+            res.send(err)
+        else if user[0].roster.length == 0
+            res.send('noroster')
+        else
+            res.JSON(user.roster)
+
+
+    this.findOne({"username": req.body.username})
+        .populate('roster.top')
+        .populate('roster.mid')
+        .populate('roster.jungle')
+        .populate('roster.adc')
+        .populate('roster.support')
+        .exec((err,doc)->
+            res.JSON(doc)
+        ))
+
+
+
 
 gameSchema.methods.updatescore = ()->
     updatescoregame(this)
 
-gameSchema.methods.updateplayerlistandstat = (playerstat, playerid, teamid, game)->
+gameSchema.methods.updateplayerlistandstat = (playerstat, playerid, teamid, game, region, gameidnoregion)->
     addplayer = (playerstat, playerid, teamid, game) ->
         update = (err, player) ->
             try
@@ -95,6 +130,11 @@ gameSchema.methods.updateplayerlistandstat = (playerstat, playerid, teamid, game
                     console.log(err + 'happened at tryif update addplayer')
                 game.playerlist.addToSet(player)
                 player.gamesplayed.addToSet(game)
+                #checks if this is most recent game played
+
+                if player.mostrecentgameid < gameidnoregion or player.mostrecentgameid == undefined
+                    player.mostrecentgameid = gameidnoregion
+                    player.mostrecentgame = game
                 playerstat['playergameid'] = game.gameid + player.playername
                 playerstat['team'] = players[playerstat['player field']][1]
                 playerstat['role'] = players[playerstat['player field']][0]
@@ -170,7 +210,7 @@ gameSchema.methods.addplayerstat = (playerstat)->
 
 Game = mongoose.model('Game', gameSchema)
 
-User = mongoose.model('User', gameSchema)
+User = mongoose.model('User', userSchema)
 
 Player = mongoose.model('Player', playerSchema)
 
