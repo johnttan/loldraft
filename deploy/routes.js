@@ -1,5 +1,5 @@
 (function() {
-  var models, passport, sendgames, validator;
+  var ensureLogin, models, passport, sendgames, validator;
 
   passport = require('passport');
 
@@ -9,11 +9,10 @@
 
   validator = require('validator');
 
+  ensureLogin = require('connect-ensure-login').ensureLoggedIn;
+
   module.exports = function(app) {
     app.get('/', function(req, res) {
-      if (req.user) {
-        res.render('draft');
-      }
       return res.render('index.jade');
     });
     app.post('/register', function(req, res) {
@@ -45,7 +44,9 @@
         return res.send(404, error);
       }
     });
-    app.post('/login', passport.authenticate('local'), function(req, res) {
+    app.post('/login', passport.authenticate('local', {
+      session: true
+    }), function(req, res) {
       return res.render('draft.jade', {
         name: req.user.username
       });
@@ -64,7 +65,7 @@
         }
       });
     });
-    return app.post('/checkemail', function(req, res) {
+    app.post('/checkemail', function(req, res) {
       if (validator.isEmail(req.body.email) !== true) {
         res.send('Email is not of valid form!');
       }
@@ -79,6 +80,14 @@
         } else {
           return res.send(true);
         }
+      });
+    });
+    return app.get('/roster', ensureLogin('/'), function(req, res) {
+      return models.User.findOne({
+        'username': req.user.username
+      }, function(err, doc) {
+        console.log('error at roster route');
+        return res.json(doc.roster);
       });
     });
   };

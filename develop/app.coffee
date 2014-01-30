@@ -2,6 +2,8 @@ express = require "express"
 mongoose = require 'mongoose'
 data = require('./models/data').models
 passport = require 'passport'
+LocalStrategy = require('passport-local').Strategy
+ensureLogin = require('connect-ensure-login').ensureLoggedIn
 
 mongoose.connect('mongodb://localhost/test')
 
@@ -19,12 +21,19 @@ app.configure ->
   viewsDir =  "#{__dirname}/views"
   app.set "views", viewsDir
   app.set "view engine", "jade"
+  app.use express.cookieParser()
   app.use express.bodyParser()
   app.use express.methodOverride()
+  app.use express.session({secret: '***REMOVED***'})
   app.use passport.initialize();
   app.use passport.session();
   app.use app.router
   app.use express.static(publicDir)
+
+passport.use(new LocalStrategy(data.User.authenticate()))
+
+passport.serializeUser(data.User.serializeUser())
+passport.deserializeUser(data.User.deserializeUser())
 
 
 app.configure "development", ->
@@ -36,9 +45,7 @@ app.configure "development", ->
 app.configure "production", ->
   app.use express.errorHandler()
 
-passport.use(data.User.createStrategy())
-passport.serializeUser(data.User.serializeUser())
-passport.deserializeUser(data.User.deserializeUser())
+
 
 require('./routes')(app)
 

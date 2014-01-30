@@ -60,7 +60,7 @@ parsewindow = (window, region, i) ->
         emitter.emit('not found', region)
         return null
     
-store = (gamejson, gameid, i, region) ->
+store = (gamejson, gameid, i, region, gameidnoregion) ->
     process = (err, game)->
         if err
             if err.code == 11000
@@ -70,13 +70,14 @@ store = (gamejson, gameid, i, region) ->
             console.log('storing: ' + gameid)
             for own teamid, team of gamejson
                 for own playerid, playerstat of gamejson[teamid]
-                    game.updateplayerlistandstat(playerstat, playerid, teamid, game, region)
+                    game.updateplayerlistandstat(playerstat, playerid, teamid, game, region, gameidnoregion)
 
 
     models.Game.findOneAndUpdate(
         {gameid: gameid},
         {
-        region: region
+        region: region,
+        gameidnoregion: gameidnoregion
         },
         {upsert: true},
         process
@@ -98,7 +99,8 @@ retrieve = (domain, i) ->
                     parsed = parsewindow(window, region, i)
                     if parsed?
                         gameid = region + parsed.gameid
-                        store(parsed.gamejson, gameid, i, region)
+                        gameidnoregion = parsed.gameid
+                        store(parsed.gamejson, gameid, i, region, gameidnoregion)
                 catch error
                     console.log(error + 'retrieve')
                     

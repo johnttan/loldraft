@@ -18,7 +18,8 @@
     "passport-local-mongoose": "*",
     "passport": "*",
     "passport-local": "*",
-    "validator": "*"
+    "validator": "*",
+    "connect-ensure-login": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.2",

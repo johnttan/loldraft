@@ -12,17 +12,19 @@ $ ->
             $.ajax(
                 data: {username: 'lol', password: 'lol'}
                 url: '/login'
-                cache: false
+                cache: true
                 type: "POST"
-                datatype: 'json'
+                datatype: 'html'
                 success: processRegistration
                 error: (jqxr, status, error)->
-                    $('.registrationfail').html('Server error, try again?')
+                    $('#signupheader').append('Server error, try again?')
                     console.log(jqxr.responseText)
             
             ))
 
 
+    populateroster = (data) ->
+        console.log(data)
 
     processRegistration = (data) ->
         animatelogout = ()->
@@ -45,6 +47,19 @@ $ ->
             }
             )
 
+
+
+        $.ajax(
+                url: '/roster'
+                cache: false
+                type: "GET"
+                datatype: 'json'
+                success: populateroster
+                error: (jqxr, status, error)->
+                    $('#signupheader').append('Server error, try again?')
+                    console.log(jqxr.responseText)
+            
+            )
         
 
 

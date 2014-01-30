@@ -1,6 +1,6 @@
 (function() {
   $(function() {
-    var processRegistration, validator;
+    var populateroster, processRegistration, validator;
     $('.contactus').click(function(e) {
       e.preventDefault();
       return $('.contactus').html('team@fantasylol.net');
@@ -13,16 +13,19 @@
           password: 'lol'
         },
         url: '/login',
-        cache: false,
+        cache: true,
         type: "POST",
-        datatype: 'json',
+        datatype: 'html',
         success: processRegistration,
         error: function(jqxr, status, error) {
-          $('.registrationfail').html('Server error, try again?');
+          $('#signupheader').append('Server error, try again?');
           return console.log(jqxr.responseText);
         }
       });
     });
+    populateroster = function(data) {
+      return console.log(data);
+    };
     processRegistration = function(data) {
       var animatelogout, fadeindraft;
       animatelogout = function() {
@@ -39,12 +42,23 @@
         });
       };
       $('.deck').fadeOut(200, fadeindraft);
-      return $('.pure-menu-horizontal').animate({
+      $('.pure-menu-horizontal').animate({
         padding: 0
       }, {
         duration: 500,
         easing: 'linear',
         complete: animatelogout
+      });
+      return $.ajax({
+        url: '/roster',
+        cache: false,
+        type: "GET",
+        datatype: 'json',
+        success: populateroster,
+        error: function(jqxr, status, error) {
+          $('#signupheader').append('Server error, try again?');
+          return console.log(jqxr.responseText);
+        }
       });
     };
     return validator = $('#signupform').validate({

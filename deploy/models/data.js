@@ -51,6 +51,7 @@
       type: Schema.Types.Mixed,
       unique: true
     },
+    gameidnoregion: Number,
     players: [_playergameSchema],
     gamelength: Number,
     region: String,
@@ -82,6 +83,11 @@
     totalwinscore: Number,
     totalMVPscore: Number,
     totalscore: Number,
+    mostrecentgameid: Number,
+    mostrecentgame: {
+      type: Schema.Types.ObjectId,
+      ref: 'Game'
+    },
     gamesplayed: [
       {
         type: Schema.Types.ObjectId,
@@ -92,12 +98,28 @@
 
   userSchema = new Schema({
     email: String,
-    roster: [
-      {
+    roster: {
+      top: {
+        type: Schema.Types.ObjectId,
+        ref: 'Player'
+      },
+      mid: {
+        type: Schema.Types.ObjectId,
+        ref: 'Player'
+      },
+      jungle: {
+        type: Schema.Types.ObjectId,
+        ref: 'Player'
+      },
+      adc: {
+        type: Schema.Types.ObjectId,
+        ref: 'Player'
+      },
+      support: {
         type: Schema.Types.ObjectId,
         ref: 'Player'
       }
-    ]
+    }
   });
 
   userSchema.plugin(passportLocalMongoose);
@@ -114,32 +136,27 @@
   userSchema["static"]('sendgames', function(req, res) {
     var callback;
     callback = function(err, user) {
-      var player, rosterjson, _i, _len, _ref;
-      rosterjson = {};
       console.log(user);
       if (err !== null) {
         return res.send(err);
       } else if (user[0].roster.length === 0) {
         return res.send('noroster');
       } else {
-        _ref = user[0].roster;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          player = _ref[_i];
-          rosterjson[player.playername] = player;
-        }
-        return res.JSON(rosterjson);
+        return res.JSON(user.roster);
       }
     };
-    return this.find({
+    return this.findOne({
       "username": req.body.username
-    }, callback);
+    }).populate('roster.top').populate('roster.mid').populate('roster.jungle').populate('roster.adc').populate('roster.support').exec(function(err, doc) {
+      return res.JSON(doc);
+    });
   });
 
   gameSchema.methods.updatescore = function() {
     return updatescoregame(this);
   };
 
-  gameSchema.methods.updateplayerlistandstat = function(playerstat, playerid, teamid, game) {
+  gameSchema.methods.updateplayerlistandstat = function(playerstat, playerid, teamid, game, region, gameidnoregion) {
     var addplayer;
     addplayer = function(playerstat, playerid, teamid, game) {
       var error, update;
@@ -151,6 +168,10 @@
           }
           game.playerlist.addToSet(player);
           player.gamesplayed.addToSet(game);
+          if (player.mostrecentgameid < gameidnoregion || player.mostrecentgameid === void 0) {
+            player.mostrecentgameid = gameidnoregion;
+            player.mostrecentgame = game;
+          }
           playerstat['playergameid'] = game.gameid + player.playername;
           playerstat['team'] = players[playerstat['player field']][1];
           playerstat['role'] = players[playerstat['player field']][0];

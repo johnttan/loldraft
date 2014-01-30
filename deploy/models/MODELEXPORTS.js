@@ -7,6 +7,8 @@
 
   models = require('./data').models;
 
+  mongoose.connect('mongodb://localhost/test');
+
   latestgamereset = function() {
     return htmlparse.queryandretrieve.reset(1669, 1800);
   };

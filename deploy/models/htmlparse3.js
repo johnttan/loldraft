@@ -50,7 +50,7 @@
     }
   };
 
-  store = function(gamejson, gameid, i, region) {
+  store = function(gamejson, gameid, i, region, gameidnoregion) {
     var process;
     process = function(err, game) {
       var playerid, playerstat, team, teamid, _results;
@@ -72,7 +72,7 @@
             for (playerid in _ref) {
               if (!__hasProp.call(_ref, playerid)) continue;
               playerstat = _ref[playerid];
-              _results1.push(game.updateplayerlistandstat(playerstat, playerid, teamid, game, region));
+              _results1.push(game.updateplayerlistandstat(playerstat, playerid, teamid, game, region, gameidnoregion));
             }
             return _results1;
           })());
@@ -83,7 +83,8 @@
     return models.Game.findOneAndUpdate({
       gameid: gameid
     }, {
-      region: region
+      region: region,
+      gameidnoregion: gameidnoregion
     }, {
       upsert: true
     }, process);
@@ -101,13 +102,14 @@
       scripts: [jquery],
       features: features,
       done: function(errors, window) {
-        var error, gameid, parsed, region;
+        var error, gameid, gameidnoregion, parsed, region;
         region = determineregion(domain);
         try {
           parsed = parsewindow(window, region, i);
           if (parsed != null) {
             gameid = region + parsed.gameid;
-            return store(parsed.gamejson, gameid, i, region);
+            gameidnoregion = parsed.gameid;
+            return store(parsed.gamejson, gameid, i, region, gameidnoregion);
           }
         } catch (_error) {
           error = _error;

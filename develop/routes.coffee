@@ -2,11 +2,11 @@ passport = require 'passport'
 models = require('./models/data').models
 sendgames = require('./models/sendgames')
 validator = require 'validator'
+ensureLogin = require('connect-ensure-login').ensureLoggedIn
+
 
 module.exports = (app)->
     app.get('/', (req, res)->
-        if req.user
-            res.render('draft')
         res.render('index.jade')
 
         )
@@ -39,12 +39,14 @@ module.exports = (app)->
     )
 
 
-    app.post('/login', passport.authenticate('local'),
+    app.post('/login', passport.authenticate('local', {session: true}),
         (req, res)->
             res.render('draft.jade', {name: req.user.username})
 
 
+
         )
+
 
     app.post('/checkusername', (req, res)->
         models.User.findOne({'username': req.body.username}, (err, doc)->
@@ -75,3 +77,12 @@ module.exports = (app)->
 
 
         )
+
+    app.get('/roster',
+        ensureLogin('/'),
+        (req, res)->
+            models.User.findOne({'username': req.user.username}, (err,doc)->
+                console.log('error at roster route')
+                res.json(doc.roster)
+
+            ))

@@ -1,5 +1,5 @@
 (function() {
-  var app, data, db, express, mongoose, passport;
+  var LocalStrategy, app, data, db, ensureLogin, express, mongoose, passport;
 
   express = require("express");
 
@@ -8,6 +8,10 @@
   data = require('./models/data').models;
 
   passport = require('passport');
+
+  LocalStrategy = require('passport-local').Strategy;
+
+  ensureLogin = require('connect-ensure-login').ensureLoggedIn;
 
   mongoose.connect('mongodb://localhost/test');
 
@@ -21,19 +25,23 @@
     viewsDir = "" + __dirname + "/views";
     app.set("views", viewsDir);
     app.set("view engine", "jade");
+    app.use(express.cookieParser());
     app.use(express.bodyParser());
     app.use(express.methodOverride());
+    app.use(express.session({
+      secret: '***REMOVED***'
+    }));
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(app.router);
     return app.use(express["static"](publicDir));
-  }), app.configure("development", function() {
+  }), passport.use(new LocalStrategy(data.User.authenticate())), passport.serializeUser(data.User.serializeUser()), passport.deserializeUser(data.User.deserializeUser()), app.configure("development", function() {
     return app.use(express.errorHandler({
       dumpExceptions: true,
       showStack: true
     }));
   }), app.configure("production", function() {
     return app.use(express.errorHandler());
-  }), passport.use(data.User.createStrategy()), passport.serializeUser(data.User.serializeUser()), passport.deserializeUser(data.User.deserializeUser()), require('./routes')(app), app.listen(3000), console.log("Express server listening on port 3000"));
+  }), require('./routes')(app), app.listen(3000), console.log("Express server listening on port 3000"));
 
 }).call(this);

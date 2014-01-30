@@ -1,7 +1,7 @@
 htmlparse = require('./htmlparse3')
 mongoose = require 'mongoose'
 models = require('./data').models
-# mongoose.connect('mongodb://localhost/test')
+mongoose.connect('mongodb://localhost/test')
 
 
 
