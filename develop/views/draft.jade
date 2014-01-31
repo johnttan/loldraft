@@ -1,7 +1,9 @@
 
 body
   link(rel='stylesheet', href='stylesheets/side-menu.css')
-  link(rel='stylesheet', href='stylesheets/override.css')
+  link(href='/stylesheets/style.css' rel='stylesheet')
+
+
   #layout
 
     a#menuLink.menu-link(href='#menu')
@@ -24,7 +26,11 @@ body
         footer.terms
             a(href='#contact') Terms of Service
     #main
-      include roster
+      .pure-g-r.is-center
+        container.is-center#roster
+          include roster
+        container.is-center#draftteam
+          include draftteam
 
 
 

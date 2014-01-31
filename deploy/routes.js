@@ -86,7 +86,6 @@
       return models.User.findOne({
         'username': req.user.username
       }, function(err, doc) {
-        console.log('error at roster route');
         return res.json(doc.roster);
       });
     });

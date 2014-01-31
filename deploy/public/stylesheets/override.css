@@ -6,3 +6,15 @@ a.pure-menu-heading#name{background:#7fc028}
 hr.fancy-line1{height:4px;background-color:#7fc028;width:50%}
 hr.fancy-line1{border:0;background:-webkit-gradient(linear, left bottom, right top, color-stop(0, #fff), color-stop(0.5, #7fc028), color-stop(1, #fff));background:-moz-linear-gradient(bottom left, #fff 0%, #7fc028 50%, #fff 100%);background:-webkit-linear-gradient(bottom left, #fff 0%, #7fc028 50%, #fff 100%);background:-o-linear-gradient(bottom left, #fff 0%, #7fc028 50%, #fff 100%);background:-ms-linear-gradient(bottom left, #fff 0%, #7fc028 50%, #fff 100%);background:linear-gradient(bottom left, #fff 0%, #7fc028 50%, #fff 100%)}
 .stat{margin-left:auto;margin-right:auto}
+#roster{margin-left:auto;margin-right:auto;width:100%;height:100%}
+#main{height:100%;}
+#main .pure-g-r.is-center{height:100%}
+.role{color:#00a6fc}
+h3.content-head.is-center.role,h2.content-head.is-center.playername,h5.content-head.is-center.cumulative,h5.content-head.is-center.kda,h5.content-head.is-center.part,h5.content-head.is-center.gold,h5.content-head.is-center.cs,h5.content-head.is-center.total,#draftteam{margin-left:auto;margin-right:auto}
+h3.content-head.is-center.role,h2.content-head.is-center.playername{margin-bottom:0;margin-top:5}
+#draftteam{width:100%;height:100%;margin-left:auto;margin-right:auto}
+div.pure-g-r.mid.is-center{margin-left:auto;margin-right:auto}
+.draftteamcontainer{max-width:1000px;margin-left:auto;margin-right:auto}
+input.pure-input-1-5.pure-input-rounded{margin-left:auto;margin-right:auto;border-radius:10px/5px;}
+#draftnow{background-color:#7fc028;color:#fff;font-family:'Hammersmith One',sans-serif;font-size:large;margin-top:20px;margin-left:auto;margin-right:auto}
+.error.draft{width:100%;box-sizing:inherit;letter-spacing:.05em}

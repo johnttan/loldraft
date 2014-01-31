@@ -82,7 +82,6 @@ module.exports = (app)->
         ensureLogin('/'),
         (req, res)->
             models.User.findOne({'username': req.user.username}, (err,doc)->
-                console.log('error at roster route')
                 res.json(doc.roster)
 
             ))

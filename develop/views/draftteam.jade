@@ -1,0 +1,39 @@
+h1.greeting.content-head.is-center
+    |Draft your Team
+hr.fancy-line1
+.draftteamcontainer
+    .pure-g-r.draftteam.is-center
+        .pure-u-1-5.top
+            .pure-g-r.mid
+                h3.content-head.is-center.role Top
+            .pure-g-r.mid.is-center
+                input.pure-input-1-5.pure-input-rounded.top#autocompletetop(placeholder="Benny")
+                .error.draft.drafttop(style="display: none;") Choose a Top
+
+        .pure-u-1-5.mid
+            .pure-g-r.mid
+                h3.content-head.is-center.role Mid
+            .pure-g-r.mid.is-center
+                input.pure-input-1-5.pure-input-rounded.mid#autocompletemid(placeholder="Voyboy")
+                .error.draft.draftmid(style="display: none;") Choose a Mid
+        .pure-u-1-5.jungle
+            .pure-g-r.mid
+                h3.content-head.is-center.role Jungle
+            .pure-g-r.mid.is-center
+                input.pure-input-1-5.pure-input-rounded.jungle#autocompletejungle(placeholder="Zuna")
+                .error.draft.draftjungle(style="display: none;") Choose a Jungle
+            
+        .pure-u-1-5.adc
+            .pure-g-r.mid
+                h3.content-head.is-center.role Marksman
+            .pure-g-r.mid.is-center
+                input.pure-input-1-5.pure-input-rounded.adc#autocompleteadc(placeholder="Sneaky")
+                .error.draft.draftadc(style="display: none;") Choose a Marksman
+        .pure-u-1-5.support
+            .pure-g-r.mid.is-center
+                h3.content-head.is-center.role Support
+            .pure-g-r.mid.is-center
+                input.pure-input-1-5.pure-input-rounded.support#autocompletesupport(placeholder="Nyph")
+                .error.draft.draftsupport(style="display: none;") Choose a Support
+    .pure-g-r.draftteam.is-center
+        button.pure-button.button-large.button-success#draftnow Draft
