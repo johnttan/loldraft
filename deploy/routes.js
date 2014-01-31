@@ -82,11 +82,55 @@
         }
       });
     });
-    return app.get('/roster', ensureLogin('/'), function(req, res) {
+    app.get('/roster', ensureLogin('/'), function(req, res) {
       return models.User.findOne({
         'username': req.user.username
-      }, function(err, doc) {
-        return res.json(doc.roster);
+      }, function(err, user) {
+        if (err) {
+          return console.log(err);
+        }
+        return user.populate('roster', function(err, user) {
+          return res.json(user.roster);
+        });
+      });
+    });
+    return app.post('/draftplayers', ensureLogin('/'), function(req, res) {
+      return models.User.findOne({
+        'username': req.user.username
+      }, function(err, user) {
+        var play, role, _ref, _results;
+        if (err) {
+          return console.log(err);
+        }
+        _ref = req.body;
+        _results = [];
+        for (role in _ref) {
+          play = _ref[role];
+          _results.push(models.Player.findOne({
+            'playername': play
+          }, function(err, player) {
+            if (err) {
+              return console.log(err);
+            }
+            if (user.roster.length < 5) {
+              user.roster.push(player);
+              player.owner = user;
+            }
+            if (user.rosterarray.length < 5) {
+              user.rosterarray.push(player.playername);
+            }
+            return user.save(function(err, user) {
+              return player.save(function(err, user) {
+                if (user.rosterarray.length === 5) {
+                  return user.populate('roster', function(err, user) {
+                    return res.json(user.roster);
+                  });
+                }
+              });
+            });
+          }));
+        }
+        return _results;
       });
     });
   };

@@ -10,11 +10,18 @@ hr.fancy-line1{border:0;background:-webkit-gradient(linear, left bottom, right t
 #main{height:100%;}
 #main .pure-g-r.is-center{height:100%}
 .role{color:#00a6fc}
-h3.content-head.is-center.role,h2.content-head.is-center.playername,h5.content-head.is-center.cumulative,h5.content-head.is-center.kda,h5.content-head.is-center.part,h5.content-head.is-center.gold,h5.content-head.is-center.cs,h5.content-head.is-center.total,#draftteam{margin-left:auto;margin-right:auto}
+h3.content-head.is-center.role,h2.content-head.is-center.playernametop,h2.content-head.is-center.playernamemid,h2.content-head.is-center.playernamejungle,h2.content-head.is-center.playernameadc,h2.content-head.is-center.playernamesupport,h5.content-head.is-center.cumulative,h5.content-head.is-center.kda,h5.content-head.is-center.part,h5.content-head.is-center.gold,h5.content-head.is-center.cs,h5.content-head.is-center.total,#draftteam{margin-left:auto;margin-right:auto}
 h3.content-head.is-center.role,h2.content-head.is-center.playername{margin-bottom:0;margin-top:5}
 #draftteam{width:100%;height:100%;margin-left:auto;margin-right:auto}
 div.pure-g-r.mid.is-center{margin-left:auto;margin-right:auto}
 .draftteamcontainer{max-width:1000px;margin-left:auto;margin-right:auto}
-input.pure-input-1-5.pure-input-rounded{margin-left:auto;margin-right:auto;border-radius:10px/5px;}
+input.pure-input-1-5.pure-input-rounded{margin-left:auto;margin-right:auto;border-radius:10px/5px;padding:5px 5px 5px 5px}
 #draftnow{background-color:#7fc028;color:#fff;font-family:'Hammersmith One',sans-serif;font-size:large;margin-top:20px;margin-left:auto;margin-right:auto}
 .error.draft{width:100%;box-sizing:inherit;letter-spacing:.05em}
+span.scoretitle{color:#7fc028;font-size:120%}
+span.score{font-size:120%}
+span.percent{color:#a65a00;font-size:120%}
+h2.content-head.is-center.playernametop,h2.content-head.is-center.playernamemid,h2.content-head.is-center.playernamejungle,h2.content-head.is-center.playernameadc,h2.content-head.is-center.playernamesupport{font-size:150%}
+#loginusername,#loginpassword{border-radius:10px/5px;padding:5px 5px 5px 5px;border:none}
+#loginpassword{margin-left:5px}
+#loginerror{color:#b44326}

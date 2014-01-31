@@ -62,6 +62,31 @@ updatescoreplayer = (playerstat, game) ->
         scorejson.nodeathscore = 0.2
 
     scorejson.totalscore = scorejson.kdascore + scorejson.partscore + scorejson.csscore + scorejson.winscore + scorejson.nodeathscore + scorejson.goldscore
+    mongoose.model('Player').findOne(
+        {
+            playername: playerstat['player field']
+        },
+        (err, player)->
+            if game.gameidnoregion not in player.gamesplayedbyid
+                player.update(
+                    {
+                        $inc:{
+                            totalkdascore: scorejson.kdascore
+                            totalpartscore: scorejson.partscore
+                            totalgpmscore: scorejson.goldscore
+                            totalcsscore: scorejson.csscore
+                            totalnodeathscore: scorejson.nodeathscore
+                            totalwinscore: scorejson.winscore
+                            totalscore: scorejson.totalscore
+                            }
+                    },
+                    (err, doc)->
+                        
+                        if err
+                            return console.log(err)
+                            )
+        )
+    
     game.model('Game').findOneAndUpdate(
         {
             gameid: game.gameid,
@@ -72,7 +97,8 @@ updatescoreplayer = (playerstat, game) ->
         },
             (err, doc)->
                 if err
-                    console.log(err)
+                    return console.log(err)
+
         )
 
 

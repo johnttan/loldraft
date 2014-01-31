@@ -109,7 +109,6 @@ $ ->
         drafted.support = $('#autocompletesupport').val()
         invalid = false
         if drafted.top not in topplayers
-            console.log('not in')
             $('.error.draft.drafttop').show()
             $('#autocompletetop').val('')
             invalid = true
@@ -130,22 +129,25 @@ $ ->
             $('#autocompletesupport').val('')
             invalid = true
         if invalid != true
-             $.ajax(
+            $.ajax(
                 data: drafted
                 url: '/draftplayers'
                 cache: false
                 type: "POST"
                 datatype: 'json'
-                success: processRegistration
+                success: processSuccessDraft
                 error: (jqxr, status, error)->
-                    $('#draftnow').text('Server error, try again?')
+                    
                     console.log(jqxr.responseText)
             
                 )
 
-    
+    processSuccessDraft = (data)->
+        $('#draftteam').hide(50)
+        populateroster(data)
 
 
+        
 
     $('.contactus').click(
         (e)->
@@ -155,17 +157,18 @@ $ ->
 
     $('#signupheader').click(
         (e)->
+            username = $('#loginusername').val()
+            password = $('#loginpassword').val()
             e.preventDefault()
             $.ajax(
-                data: {username: 'lol', password: 'lol'}
+                data: {username: username, password: password}
                 url: '/login'
                 cache: true
                 type: "POST"
                 datatype: 'html'
                 success: processRegistration
                 error: (jqxr, status, error)->
-                    $('#signupheader').append('Server error, try again?')
-                    console.log(jqxr.responseText)
+                    $('#loginerror').text('Incorrect username or password.')
             
             ))
 
@@ -191,15 +194,52 @@ $ ->
 
             })
 
+
+    calcdelta = (player, score)->
+        if score == 'gold'
+            final = player['totalgpmscore']
+        else if score == 'total'
+            final = player['totalscore']
+        else
+            final = player['total' + score + 'score']
+        for playerstat in player.mostrecentgamestat.players
+            if playerstat['player field'] == player.playername
+                previous = playerstat['score'][score + 'score']
+
+        delta = (final - previous) / previous
+        return delta
+
+
+
     populateroster = (data) ->
 
-        if JSON.stringify(data) == '{}'
-
+        if JSON.stringify(data) == '[]'
             $('#draftteam').show(100)
+        else
+            console.log(JSON.stringify(data))
+            console.log(JSON.stringify(data))
+            for player in data
+                console.log('.playername' + player.role)
+                $('.playername' + player.role).text(player.playername)
+                $('.pure-u-1-5.' + player.role + ' .kda .score').text(Math.round(player.totalkdascore *10) / 10)
+                $('.pure-u-1-5.' + player.role + ' .kda .percent').text(Math.round(calcdelta(player, 'kda')) + '%')
+                $('.pure-u-1-5.' + player.role + ' .gold .score').text(Math.round(player.totalgpmscore *10) / 10)
+                $('.pure-u-1-5.' + player.role + ' .gold .percent').text(Math.round(calcdelta(player, 'gold')) + '%')
+                $('.pure-u-1-5.' + player.role + ' .part .score').text(Math.round(player.totalpartscore *10) / 10)
+                $('.pure-u-1-5.' + player.role + ' .part .percent').text(Math.round(calcdelta(player, 'part')) + '%')
+                $('.pure-u-1-5.' + player.role + ' .cs .score').text(Math.round(player.totalcsscore *10) / 10)
+                $('.pure-u-1-5.' + player.role + ' .cs .percent').text(Math.round(calcdelta(player, 'cs')) + '%')
+                $('.pure-u-1-5.' + player.role + ' .total .score').text(Math.round(player.totalscore *10) / 10)
+                $('.pure-u-1-5.' + player.role + ' .total .percent').text(Math.round(calcdelta(player, 'total')) + '%')
+
+            $('#roster').show(100)
 
     processRegistration = (data) ->
-        animatelogout = ()->
-            $('#signupheaderchild').fadeOut(50, ()->
+        $('#loginerror').text('')
+        $('#loginusername').fadeOut(50)
+        $('#loginpassword').fadeOut(50)
+        animatelogout = ()-> 
+            $('#signupheaderchild').fadeOut(20, ()->
                 $(this).html("Logout")
                 $(this).fadeIn(50)
                 )
@@ -218,9 +258,7 @@ $ ->
                 datatype: 'json'
                 success: populateroster
                 error: (jqxr, status, error)->
-                    $('#signupheader').append('Server error, try again?')
                     console.log(jqxr.responseText)
-            
             )
         $('.deck').fadeOut(200, fadeindraft)
         $('.pure-menu-horizontal').animate({

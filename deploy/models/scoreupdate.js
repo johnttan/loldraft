@@ -1,5 +1,6 @@
 (function() {
-  var async, math, mongoose, scoring, updatecsscore, updategoldscore, updatekdascore, updatepartscore, updatescoregame, updatescoreplayer;
+  var async, math, mongoose, scoring, updatecsscore, updategoldscore, updatekdascore, updatepartscore, updatescoregame, updatescoreplayer,
+    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   math = require('mathjs')();
 
@@ -77,6 +78,28 @@
       scorejson.nodeathscore = 0.2;
     }
     scorejson.totalscore = scorejson.kdascore + scorejson.partscore + scorejson.csscore + scorejson.winscore + scorejson.nodeathscore + scorejson.goldscore;
+    mongoose.model('Player').findOne({
+      playername: playerstat['player field']
+    }, function(err, player) {
+      var _ref;
+      if (_ref = game.gameidnoregion, __indexOf.call(player.gamesplayedbyid, _ref) < 0) {
+        return player.update({
+          $inc: {
+            totalkdascore: scorejson.kdascore,
+            totalpartscore: scorejson.partscore,
+            totalgpmscore: scorejson.goldscore,
+            totalcsscore: scorejson.csscore,
+            totalnodeathscore: scorejson.nodeathscore,
+            totalwinscore: scorejson.winscore,
+            totalscore: scorejson.totalscore
+          }
+        }, function(err, doc) {
+          if (err) {
+            return console.log(err);
+          }
+        });
+      }
+    });
     return game.model('Game').findOneAndUpdate({
       gameid: game.gameid,
       'players.playergameid': playerstat.playergameid

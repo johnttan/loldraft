@@ -5,7 +5,7 @@ passport = require 'passport'
 LocalStrategy = require('passport-local').Strategy
 ensureLogin = require('connect-ensure-login').ensureLoggedIn
 
-mongoose.connect('mongodb://localhost/test')
+mongoose.connect('***REMOVED***')
 
 db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error'))

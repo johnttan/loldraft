@@ -2,7 +2,7 @@
   var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   $(function() {
-    var adcplayers, draftteam, info, jungleplayers, key, midplayers, playerinfo, populateroster, processRegistration, setupauto, supportplayers, topplayers, validator;
+    var adcplayers, calcdelta, draftteam, info, jungleplayers, key, midplayers, playerinfo, populateroster, processRegistration, processSuccessDraft, setupauto, supportplayers, topplayers, validator;
     playerinfo = {
       Cruzerthebruzer: ['top', 'Dignitas'],
       Crumbzz: ['jungle', 'Dignitas'],
@@ -115,7 +115,6 @@
       drafted.support = $('#autocompletesupport').val();
       invalid = false;
       if (_ref = drafted.top, __indexOf.call(topplayers, _ref) < 0) {
-        console.log('not in');
         $('.error.draft.drafttop').show();
         $('#autocompletetop').val('');
         invalid = true;
@@ -147,24 +146,30 @@
           cache: false,
           type: "POST",
           datatype: 'json',
-          success: processRegistration,
+          success: processSuccessDraft,
           error: function(jqxr, status, error) {
-            $('#draftnow').text('Server error, try again?');
             return console.log(jqxr.responseText);
           }
         });
       }
+    };
+    processSuccessDraft = function(data) {
+      $('#draftteam').hide(50);
+      return populateroster(data);
     };
     $('.contactus').click(function(e) {
       e.preventDefault();
       return $('.contactus').html('team@fantasylol.net');
     });
     $('#signupheader').click(function(e) {
+      var password, username;
+      username = $('#loginusername').val();
+      password = $('#loginpassword').val();
       e.preventDefault();
       return $.ajax({
         data: {
-          username: 'lol',
-          password: 'lol'
+          username: username,
+          password: password
         },
         url: '/login',
         cache: true,
@@ -172,8 +177,7 @@
         datatype: 'html',
         success: processRegistration,
         error: function(jqxr, status, error) {
-          $('#signupheader').append('Server error, try again?');
-          return console.log(jqxr.responseText);
+          return $('#loginerror').text('Incorrect username or password.');
         }
       });
     });
@@ -194,15 +198,57 @@
         source: supportplayers
       });
     };
+    calcdelta = function(player, score) {
+      var delta, final, playerstat, previous, _i, _len, _ref;
+      if (score === 'gold') {
+        final = player['totalgpmscore'];
+      } else if (score === 'total') {
+        final = player['totalscore'];
+      } else {
+        final = player['total' + score + 'score'];
+      }
+      _ref = player.mostrecentgamestat.players;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        playerstat = _ref[_i];
+        if (playerstat['player field'] === player.playername) {
+          previous = playerstat['score'][score + 'score'];
+        }
+      }
+      delta = (final - previous) / previous;
+      return delta;
+    };
     populateroster = function(data) {
-      if (JSON.stringify(data) === '{}') {
+      var player, _i, _len;
+      if (JSON.stringify(data) === '[]') {
         return $('#draftteam').show(100);
+      } else {
+        console.log(JSON.stringify(data));
+        console.log(JSON.stringify(data));
+        for (_i = 0, _len = data.length; _i < _len; _i++) {
+          player = data[_i];
+          console.log('.playername' + player.role);
+          $('.playername' + player.role).text(player.playername);
+          $('.pure-u-1-5.' + player.role + ' .kda .score').text(Math.round(player.totalkdascore * 10) / 10);
+          $('.pure-u-1-5.' + player.role + ' .kda .percent').text(Math.round(calcdelta(player, 'kda')) + '%');
+          $('.pure-u-1-5.' + player.role + ' .gold .score').text(Math.round(player.totalgpmscore * 10) / 10);
+          $('.pure-u-1-5.' + player.role + ' .gold .percent').text(Math.round(calcdelta(player, 'gold')) + '%');
+          $('.pure-u-1-5.' + player.role + ' .part .score').text(Math.round(player.totalpartscore * 10) / 10);
+          $('.pure-u-1-5.' + player.role + ' .part .percent').text(Math.round(calcdelta(player, 'part')) + '%');
+          $('.pure-u-1-5.' + player.role + ' .cs .score').text(Math.round(player.totalcsscore * 10) / 10);
+          $('.pure-u-1-5.' + player.role + ' .cs .percent').text(Math.round(calcdelta(player, 'cs')) + '%');
+          $('.pure-u-1-5.' + player.role + ' .total .score').text(Math.round(player.totalscore * 10) / 10);
+          $('.pure-u-1-5.' + player.role + ' .total .percent').text(Math.round(calcdelta(player, 'total')) + '%');
+        }
+        return $('#roster').show(100);
       }
     };
     processRegistration = function(data) {
       var animatelogout, fadeindraft;
+      $('#loginerror').text('');
+      $('#loginusername').fadeOut(50);
+      $('#loginpassword').fadeOut(50);
       animatelogout = function() {
-        return $('#signupheaderchild').fadeOut(50, function() {
+        return $('#signupheaderchild').fadeOut(20, function() {
           $(this).html("Logout");
           return $(this).fadeIn(50);
         });
@@ -224,7 +270,6 @@
           datatype: 'json',
           success: populateroster,
           error: function(jqxr, status, error) {
-            $('#signupheader').append('Server error, try again?');
             return console.log(jqxr.responseText);
           }
         });

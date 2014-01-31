@@ -58,33 +58,32 @@ playerSchema = new Schema(
     player_fullname: String,
     role: String,
     totalkdascore: Number,
+    kdadelta: Number,
     totalpartscore: Number,
+    partdelta: Number,
     totalgpmscore: Number,
-    totalCSscore: Number,
+    gpmdelta: Number,
+    totalcsscore: Number,
+    csdelta: Number
     totalnodeathscore: Number,
     totalwinscore: Number,
     totalMVPscore: Number,
     totalscore: Number,
-    mostrecentgameid: Number
+    totaldelta: Number
+    mostrecentgameid: Number,
+    gamesplayedbyid: Array,
     mostrecentgame: {type: Schema.Types.ObjectId, ref: 'Game'}
+    mostrecentgamestat: Schema.Types.Mixed
     gamesplayed: [{type: Schema.Types.ObjectId, ref: 'Game'}]
+    owner: {type: Schema.Types.ObjectId, ref: 'User'}
     )
 
 
 
 userSchema = new Schema(
     email: String,
-    roster: 
-        top:
-            {type: Schema.Types.ObjectId, ref: 'Player'}
-        mid:
-            {type: Schema.Types.ObjectId, ref: 'Player'}
-        jungle:
-            {type: Schema.Types.ObjectId, ref: 'Player'}
-        adc:
-            {type: Schema.Types.ObjectId, ref: 'Player'}
-        support:
-            {type: Schema.Types.ObjectId, ref: 'Player'}
+    roster: [{type: Schema.Types.ObjectId, ref: 'Player'}]
+    rosterarray: Array
     )
 userSchema.plugin(passportLocalMongoose)
 
@@ -95,16 +94,31 @@ latestgameSchema = new Schema(
     )
 
 
-userSchema.static('sendgames', (req, res)->
-    callback = (err, user)->
-        console.log(user)
-        if err != null
-            res.send(err)
-        else if user[0].roster.length == 0
-            res.send('noroster')
-        else
-            res.JSON(user.roster)
+gameSchema.statics.aggregatescore = ()->
+    this.find({}, (err, games)->
+                    console.log(games)
+                    if err
+                        return console.log(err)
+                    games.forEach((game)->
+                        game.players.forEach((playergame)->
+                            Player.findOne(
+                                {'playername': playergame['player field']},
+                                (err, player)->
+                                            if err
+                                                return console.log(err)
+                                            console.log(player.playername + 'aggregating score')
+                                            player.totalkdascore += playergame.score.kdascore
+                                            player.totalpartscore += playergame.score.partscore
+                                            player.totalgpmscore += playergame.score.goldscore
+                                            player.totalcsscore += playergame.score.csscore
+                                            player.totalnodeathscore += playergame.score.nodeathscore
+                                            player.totalMVPscore += playergame.score.MVPscore
+                                            player.totalscore += playergame.score.totalscore
+                                            player.save()
+                                        ))              )
+            )
 
+userSchema.methods.sendgames = (req, res)->
 
     this.findOne({"username": req.body.username})
         .populate('roster.top')
@@ -114,10 +128,17 @@ userSchema.static('sendgames', (req, res)->
         .populate('roster.support')
         .exec((err,doc)->
             res.JSON(doc)
-        ))
+        )
 
 
-
+# totalkdascore: Number,
+# totalpartscore: Number,
+# totalgpmscore: Number,
+# totalCSscore: Number,
+# totalnodeathscore: Number,
+# totalwinscore: Number,
+# totalMVPscore: Number,
+# totalscore: Number,
 
 gameSchema.methods.updatescore = ()->
     updatescoregame(this)
@@ -131,10 +152,11 @@ gameSchema.methods.updateplayerlistandstat = (playerstat, playerid, teamid, game
                 game.playerlist.addToSet(player)
                 player.gamesplayed.addToSet(game)
                 #checks if this is most recent game played
-
-                if player.mostrecentgameid < gameidnoregion or player.mostrecentgameid == undefined
+                if player.mostrecentgameid <= gameidnoregion or player.mostrecentgameid == undefined
                     player.mostrecentgameid = gameidnoregion
                     player.mostrecentgame = game
+                    player.mostrecentgamestat = game 
+                player.gamesplayedbyid.push(gameidnoregion)
                 playerstat['playergameid'] = game.gameid + player.playername
                 playerstat['team'] = players[playerstat['player field']][1]
                 playerstat['role'] = players[playerstat['player field']][0]
@@ -207,7 +229,7 @@ gameSchema.methods.addplayerstat = (playerstat)->
             this.addplayerstat(playerstat)
         )
 
-
+_playergame = mongoose.model('_playergame', _playergameSchema)
 Game = mongoose.model('Game', gameSchema)
 
 User = mongoose.model('User', userSchema)
@@ -221,6 +243,7 @@ exports.models =
     Game: Game
     User: User
     latestgame: latestGame
+    _playergame: _playergame
     Schemas:
         userSchema: userSchema
         latestgameSchema: latestgameSchema

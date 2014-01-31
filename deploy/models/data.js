@@ -1,5 +1,5 @@
 (function() {
-  var EventEmitter, Game, Player, Schema, User, gameSchema, latestGame, latestgameSchema, mongoose, passportLocalMongoose, playerSchema, players, updatescoregame, userSchema, _playergameSchema;
+  var EventEmitter, Game, Player, Schema, User, gameSchema, latestGame, latestgameSchema, mongoose, passportLocalMongoose, playerSchema, players, updatescoregame, userSchema, _playergame, _playergameSchema;
 
   mongoose = require('mongoose');
 
@@ -76,50 +76,46 @@
     player_fullname: String,
     role: String,
     totalkdascore: Number,
+    kdadelta: Number,
     totalpartscore: Number,
+    partdelta: Number,
     totalgpmscore: Number,
-    totalCSscore: Number,
+    gpmdelta: Number,
+    totalcsscore: Number,
+    csdelta: Number,
     totalnodeathscore: Number,
     totalwinscore: Number,
     totalMVPscore: Number,
     totalscore: Number,
+    totaldelta: Number,
     mostrecentgameid: Number,
+    gamesplayedbyid: Array,
     mostrecentgame: {
       type: Schema.Types.ObjectId,
       ref: 'Game'
     },
+    mostrecentgamestat: Schema.Types.Mixed,
     gamesplayed: [
       {
         type: Schema.Types.ObjectId,
         ref: 'Game'
       }
-    ]
+    ],
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
   });
 
   userSchema = new Schema({
     email: String,
-    roster: {
-      top: {
-        type: Schema.Types.ObjectId,
-        ref: 'Player'
-      },
-      mid: {
-        type: Schema.Types.ObjectId,
-        ref: 'Player'
-      },
-      jungle: {
-        type: Schema.Types.ObjectId,
-        ref: 'Player'
-      },
-      adc: {
-        type: Schema.Types.ObjectId,
-        ref: 'Player'
-      },
-      support: {
+    roster: [
+      {
         type: Schema.Types.ObjectId,
         ref: 'Player'
       }
-    }
+    ],
+    rosterarray: Array
   });
 
   userSchema.plugin(passportLocalMongoose);
@@ -133,24 +129,42 @@
     }
   });
 
-  userSchema["static"]('sendgames', function(req, res) {
-    var callback;
-    callback = function(err, user) {
-      console.log(user);
-      if (err !== null) {
-        return res.send(err);
-      } else if (user[0].roster.length === 0) {
-        return res.send('noroster');
-      } else {
-        return res.JSON(user.roster);
+  gameSchema.statics.aggregatescore = function() {
+    return this.find({}, function(err, games) {
+      console.log(games);
+      if (err) {
+        return console.log(err);
       }
-    };
+      return games.forEach(function(game) {
+        return game.players.forEach(function(playergame) {
+          return Player.findOne({
+            'playername': playergame['player field']
+          }, function(err, player) {
+            if (err) {
+              return console.log(err);
+            }
+            console.log(player.playername + 'aggregating score');
+            player.totalkdascore += playergame.score.kdascore;
+            player.totalpartscore += playergame.score.partscore;
+            player.totalgpmscore += playergame.score.goldscore;
+            player.totalcsscore += playergame.score.csscore;
+            player.totalnodeathscore += playergame.score.nodeathscore;
+            player.totalMVPscore += playergame.score.MVPscore;
+            player.totalscore += playergame.score.totalscore;
+            return player.save();
+          });
+        });
+      });
+    });
+  };
+
+  userSchema.methods.sendgames = function(req, res) {
     return this.findOne({
       "username": req.body.username
     }).populate('roster.top').populate('roster.mid').populate('roster.jungle').populate('roster.adc').populate('roster.support').exec(function(err, doc) {
       return res.JSON(doc);
     });
-  });
+  };
 
   gameSchema.methods.updatescore = function() {
     return updatescoregame(this);
@@ -168,10 +182,12 @@
           }
           game.playerlist.addToSet(player);
           player.gamesplayed.addToSet(game);
-          if (player.mostrecentgameid < gameidnoregion || player.mostrecentgameid === void 0) {
+          if (player.mostrecentgameid <= gameidnoregion || player.mostrecentgameid === void 0) {
             player.mostrecentgameid = gameidnoregion;
             player.mostrecentgame = game;
+            player.mostrecentgamestat = game;
           }
+          player.gamesplayedbyid.push(gameidnoregion);
           playerstat['playergameid'] = game.gameid + player.playername;
           playerstat['team'] = players[playerstat['player field']][1];
           playerstat['role'] = players[playerstat['player field']][0];
@@ -245,6 +261,8 @@
     });
   };
 
+  _playergame = mongoose.model('_playergame', _playergameSchema);
+
   Game = mongoose.model('Game', gameSchema);
 
   User = mongoose.model('User', userSchema);
@@ -258,6 +276,7 @@
     Game: Game,
     User: User,
     latestgame: latestGame,
+    _playergame: _playergame,
     Schemas: {
       userSchema: userSchema,
       latestgameSchema: latestgameSchema

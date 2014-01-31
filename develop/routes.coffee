@@ -81,7 +81,43 @@ module.exports = (app)->
     app.get('/roster',
         ensureLogin('/'),
         (req, res)->
-            models.User.findOne({'username': req.user.username}, (err,doc)->
-                res.json(doc.roster)
-
+            models.User.findOne({'username': req.user.username}, (err,user)->
+                if err
+                    return console.log(err)
+                user.populate('roster', (err, user)->
+                                            res.json(user.roster)
+                                            )
             ))
+
+    app.post('/draftplayers',
+        ensureLogin('/'),
+        (req, res)->
+
+            models.User.findOne({'username': req.user.username}, (err,user)->
+                if err
+                    return console.log(err)
+                for role, play of req.body
+                    models.Player.findOne({'playername': play}, (err, player)->
+                        if err
+                            return console.log(err)
+                        if user.roster.length < 5
+                            user.roster.push (player)
+                            player.owner = user
+                        if user.rosterarray.length < 5
+                            user.rosterarray.push(player.playername)
+                        user.save((err, user)->
+                            player.save((err,user)->
+                                if user.rosterarray.length == 5
+                                        user.populate('roster', (err, user)->
+
+                                                res.json(user.roster)
+                                                
+                                            
+                                            )
+                                )
+                                    
+                            )
+                        )
+                    ))
+
+        

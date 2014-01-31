@@ -1,7 +1,7 @@
 htmlparse = require('./htmlparse3')
 mongoose = require 'mongoose'
 models = require('./data').models
-mongoose.connect('mongodb://localhost/test')
+mongoose.connect('***REMOVED***')
 
 
 
@@ -13,7 +13,6 @@ latestgamereset = ()->
 latestgamereset()
 htmlparse.queryandretrieve.NA()
 htmlparse.queryandretrieve.EU()
-
 
 
 exports.resettogame = htmlparse.queryandretrieve.reset#(1669, 1800)
