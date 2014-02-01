@@ -146,7 +146,7 @@ $ ->
         $('#draftteam').hide(50)
         populateroster(data)
 
-
+    
         
 
     $('.contactus').click(
@@ -154,7 +154,57 @@ $ ->
             e.preventDefault()
             $('.contactus').html('team@fantasylol.net')
         )
-
+    $('#loginpassword').keypress((e)->
+        if e.which == 13
+            username = $('#loginusername').val()
+            password = $('#loginpassword').val()
+            e.preventDefault()
+            $.ajax(
+                data: {username: username, password: password}
+                url: '/login'
+                cache: true
+                type: "POST"
+                datatype: 'html'
+                success: processRegistration
+                error: (jqxr, status, error)->
+                    $('#loginerror').text('Incorrect username or password.')
+            
+            )
+        )
+    $('#loginusername').keypress((e)->
+        if e.which == 13
+            username = $('#loginusername').val()
+            password = $('#loginpassword').val()
+            e.preventDefault()
+            $.ajax(
+                data: {username: username, password: password}
+                url: '/login'
+                cache: true
+                type: "POST"
+                datatype: 'html'
+                success: processRegistration
+                error: (jqxr, status, error)->
+                    $('#loginerror').text('Incorrect username or password.')
+            
+            )
+        )
+    $('#loginusername').keypress((e)->
+        if e.which == 13
+            username = $('#loginusername').val()
+            password = $('#loginpassword').val()
+            e.preventDefault()
+            $.ajax(
+                data: {username: username, password: password}
+                url: '/login'
+                cache: true
+                type: "POST"
+                datatype: 'html'
+                success: processRegistration
+                error: (jqxr, status, error)->
+                    $('#loginerror').text('Incorrect username or password.')
+            
+            )
+        )
     $('#signupheader').click(
         (e)->
             username = $('#loginusername').val()
@@ -213,8 +263,10 @@ $ ->
 
 
     populateroster = (data) ->
+        console.log(data)
         if JSON.stringify(data) == '[]'
             $('#draftteam').show(100)
+
         else
             for player in data
                 ratio = (player.timesvisited / player.gamesplayed.length)
@@ -242,6 +294,19 @@ $ ->
             $('#signupheaderchild').fadeOut(20, ()->
                 $(this).html("Logout")
                 $(this).fadeIn(50)
+                $(this).on('click', ()->
+                                        console.log('clicked logout')
+                                        $.ajax(
+                                            url: '/logout'
+                                            cache: false
+                                            type: "GET"
+                                            datatype: 'html'
+                                            success: (data)->
+                                                document.write(data)
+                                            error: (jqxr, status, error)->
+                                                console.log("couldn't log out")
+                                        )
+                    )
                 )
         fadeindraft = ()->
             $('.deck').html(data)
@@ -270,18 +335,15 @@ $ ->
                 complete: animatelogout
             }
             )
-
-
-
-        
-        
-
-
-        
-
-
-        
-
+    $.ajax(
+                url: '/autologin'
+                cache: true
+                type: "GET"
+                datatype: 'html'
+                success: processRegistration
+                error: (jqxr, status, error)->
+                    console.log('not logged in')
+                    )
     validator = $('#signupform').validate({
         debug: true
         rules:{

@@ -44,7 +44,18 @@
         return res.send(404, error);
       }
     });
+    app.get('/logout', function(req, res) {
+      req.logout();
+      return res.redirect('/');
+    });
     app.post('/login', passport.authenticate('local', {
+      session: true
+    }), function(req, res) {
+      return res.render('draft.jade', {
+        name: req.user.username
+      });
+    });
+    app.get('/autologin', passport.authenticate('local', {
       session: true
     }), function(req, res) {
       return res.render('draft.jade', {
@@ -102,6 +113,8 @@
         if (err) {
           return console.log(err);
         }
+        user.roster = [];
+        user.rosterarray = [];
         _ref = req.body;
         _results = [];
         for (role in _ref) {
@@ -120,9 +133,10 @@
               user.rosterarray.push(player.playername);
             }
             return user.save(function(err, user) {
-              return player.save(function(err, user) {
+              return player.save(function(err, player) {
                 if (user.rosterarray.length === 5) {
                   return user.populate('roster', function(err, user) {
+                    console.log(user.roster);
                     return res.json(user.roster);
                   });
                 }

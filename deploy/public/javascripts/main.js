@@ -161,6 +161,72 @@
       e.preventDefault();
       return $('.contactus').html('team@fantasylol.net');
     });
+    $('#loginpassword').keypress(function(e) {
+      var password, username;
+      if (e.which === 13) {
+        username = $('#loginusername').val();
+        password = $('#loginpassword').val();
+        e.preventDefault();
+        return $.ajax({
+          data: {
+            username: username,
+            password: password
+          },
+          url: '/login',
+          cache: true,
+          type: "POST",
+          datatype: 'html',
+          success: processRegistration,
+          error: function(jqxr, status, error) {
+            return $('#loginerror').text('Incorrect username or password.');
+          }
+        });
+      }
+    });
+    $('#loginusername').keypress(function(e) {
+      var password, username;
+      if (e.which === 13) {
+        username = $('#loginusername').val();
+        password = $('#loginpassword').val();
+        e.preventDefault();
+        return $.ajax({
+          data: {
+            username: username,
+            password: password
+          },
+          url: '/login',
+          cache: true,
+          type: "POST",
+          datatype: 'html',
+          success: processRegistration,
+          error: function(jqxr, status, error) {
+            return $('#loginerror').text('Incorrect username or password.');
+          }
+        });
+      }
+    });
+    $('#loginusername').keypress(function(e) {
+      var password, username;
+      if (e.which === 13) {
+        username = $('#loginusername').val();
+        password = $('#loginpassword').val();
+        e.preventDefault();
+        return $.ajax({
+          data: {
+            username: username,
+            password: password
+          },
+          url: '/login',
+          cache: true,
+          type: "POST",
+          datatype: 'html',
+          success: processRegistration,
+          error: function(jqxr, status, error) {
+            return $('#loginerror').text('Incorrect username or password.');
+          }
+        });
+      }
+    });
     $('#signupheader').click(function(e) {
       var password, username;
       username = $('#loginusername').val();
@@ -220,6 +286,7 @@
     };
     populateroster = function(data) {
       var player, ratio, _i, _len;
+      console.log(data);
       if (JSON.stringify(data) === '[]') {
         return $('#draftteam').show(100);
       } else {
@@ -251,7 +318,22 @@
       animatelogout = function() {
         return $('#signupheaderchild').fadeOut(20, function() {
           $(this).html("Logout");
-          return $(this).fadeIn(50);
+          $(this).fadeIn(50);
+          return $(this).on('click', function() {
+            console.log('clicked logout');
+            return $.ajax({
+              url: '/logout',
+              cache: false,
+              type: "GET",
+              datatype: 'html',
+              success: function(data) {
+                return document.write(data);
+              },
+              error: function(jqxr, status, error) {
+                return console.log("couldn't log out");
+              }
+            });
+          });
         });
       };
       fadeindraft = function() {
@@ -284,6 +366,16 @@
         complete: animatelogout
       });
     };
+    $.ajax({
+      url: '/autologin',
+      cache: true,
+      type: "GET",
+      datatype: 'html',
+      success: processRegistration,
+      error: function(jqxr, status, error) {
+        return console.log('not logged in');
+      }
+    });
     return validator = $('#signupform').validate({
       debug: true,
       rules: {

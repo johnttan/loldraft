@@ -29,7 +29,10 @@
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(express.session({
-      secret: '***REMOVED***'
+      secret: '***REMOVED***',
+      cookie: {
+        maxAge: 20000000
+      }
     }));
     app.use(passport.initialize());
     app.use(passport.session());
@@ -42,6 +45,6 @@
     }));
   }), app.configure("production", function() {
     return app.use(express.errorHandler());
-  }), require('./routes')(app), app.listen(3000), console.log("Express server listening on port 3000"));
+  }), require('./routes')(app), app.listen(8080), console.log("Express server listening on port 3000"));
 
 }).call(this);

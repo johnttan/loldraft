@@ -38,15 +38,20 @@ module.exports = (app)->
             res.send(404, error)
     )
 
-
+    app.get('/logout', (req, res)->
+            req.logout()
+            res.redirect('/')
+            )
     app.post('/login', passport.authenticate('local', {session: true}),
         (req, res)->
             res.render('draft.jade', {name: req.user.username})
-
-
-
         )
 
+    app.get('/autologin', passport.authenticate('local', {session: true}),
+        (req, res)->
+                res.render('draft.jade', {name: req.user.username})
+
+        )
 
     app.post('/checkusername', (req, res)->
         models.User.findOne({'username': req.body.username}, (err, doc)->
@@ -96,6 +101,8 @@ module.exports = (app)->
             models.User.findOne({'username': req.user.username}, (err,user)->
                 if err
                     return console.log(err)
+                user.roster = []
+                user.rosterarray = []
                 for role, play of req.body
                     models.Player.findOne({'playername': play}, (err, player)->
                         if err
@@ -106,11 +113,11 @@ module.exports = (app)->
                         if user.rosterarray.length < 5
                             user.rosterarray.push(player.playername)
                         user.save((err, user)->
-                            player.save((err,user)->
+                            player.save((err, player)->
                                 if user.rosterarray.length == 5
                                         user.populate('roster', (err, user)->
-
-                                                res.json(user.roster)
+                                                console.log(user.roster)
+                                                return res.json(user.roster)
                                                 
                                             
                                             )

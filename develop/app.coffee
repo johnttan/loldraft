@@ -24,7 +24,13 @@ app.configure ->
   app.use express.cookieParser()
   app.use express.bodyParser()
   app.use express.methodOverride()
-  app.use express.session({secret: '***REMOVED***'})
+  app.use express.session(
+    {
+      secret: '***REMOVED***',
+      cookie: {maxAge: 20000000}
+
+    }
+    )
   app.use passport.initialize();
   app.use passport.session();
   app.use app.router
@@ -49,7 +55,7 @@ app.configure "production", ->
 
 require('./routes')(app)
 
-app.listen 3000
+app.listen 8080
 console.log "Express server listening on port 3000"
 
 )
