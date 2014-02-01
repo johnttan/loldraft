@@ -196,15 +196,16 @@ $ ->
 
 
     calcdelta = (player, score)->
+        ratio = (player.timesvisited / player.gamesplayed.length)
         if score == 'gold'
-            final = player['totalgpmscore']
+            final = player['totalgpmscore'] / ratio
         else if score == 'total'
-            final = player['totalscore']
+            final = player['totalscore'] / ratio
         else
-            final = player['total' + score + 'score']
+            final = player['total' + score + 'score'] / ratio
         for playerstat in player.mostrecentgamestat.players
             if playerstat['player field'] == player.playername
-                previous = playerstat['score'][score + 'score']
+                previous = playerstat['score'][score + 'score'] / ratio
 
         delta = (final - previous) / previous
         return delta
@@ -212,24 +213,23 @@ $ ->
 
 
     populateroster = (data) ->
-
         if JSON.stringify(data) == '[]'
             $('#draftteam').show(100)
         else
-            console.log(JSON.stringify(data))
-            console.log(JSON.stringify(data))
             for player in data
+                ratio = (player.timesvisited / player.gamesplayed.length)
                 console.log('.playername' + player.role)
+                console.log(ratio)
                 $('.playername' + player.role).text(player.playername)
-                $('.pure-u-1-5.' + player.role + ' .kda .score').text(Math.round(player.totalkdascore *10) / 10)
+                $('.pure-u-1-5.' + player.role + ' .kda .score').text((Math.round(player.totalkdascore *10 / ratio) / 10))
                 $('.pure-u-1-5.' + player.role + ' .kda .percent').text(Math.round(calcdelta(player, 'kda')) + '%')
-                $('.pure-u-1-5.' + player.role + ' .gold .score').text(Math.round(player.totalgpmscore *10) / 10)
+                $('.pure-u-1-5.' + player.role + ' .gold .score').text(Math.round(player.totalgpmscore *10 / ratio) / 10)
                 $('.pure-u-1-5.' + player.role + ' .gold .percent').text(Math.round(calcdelta(player, 'gold')) + '%')
-                $('.pure-u-1-5.' + player.role + ' .part .score').text(Math.round(player.totalpartscore *10) / 10)
+                $('.pure-u-1-5.' + player.role + ' .part .score').text(Math.round(player.totalpartscore *10 / ratio) / 10)
                 $('.pure-u-1-5.' + player.role + ' .part .percent').text(Math.round(calcdelta(player, 'part')) + '%')
-                $('.pure-u-1-5.' + player.role + ' .cs .score').text(Math.round(player.totalcsscore *10) / 10)
+                $('.pure-u-1-5.' + player.role + ' .cs .score').text(Math.round(player.totalcsscore *10 / ratio) / 10)
                 $('.pure-u-1-5.' + player.role + ' .cs .percent').text(Math.round(calcdelta(player, 'cs')) + '%')
-                $('.pure-u-1-5.' + player.role + ' .total .score').text(Math.round(player.totalscore *10) / 10)
+                $('.pure-u-1-5.' + player.role + ' .total .score').text(Math.round(player.totalscore *10 / ratio) / 10)
                 $('.pure-u-1-5.' + player.role + ' .total .percent').text(Math.round(calcdelta(player, 'total')) + '%')
 
             $('#roster').show(100)

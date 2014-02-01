@@ -78,6 +78,7 @@ updatescoreplayer = (playerstat, game) ->
                             totalnodeathscore: scorejson.nodeathscore
                             totalwinscore: scorejson.winscore
                             totalscore: scorejson.totalscore
+                            timesvisited: 1
                             }
                     },
                     (err, doc)->

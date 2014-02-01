@@ -57,6 +57,7 @@ playerSchema = new Schema(
     playername: String,
     player_fullname: String,
     role: String,
+    timesvisited: Number,
     totalkdascore: Number,
     kdadelta: Number,
     totalpartscore: Number,

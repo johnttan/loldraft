@@ -91,7 +91,8 @@
             totalcsscore: scorejson.csscore,
             totalnodeathscore: scorejson.nodeathscore,
             totalwinscore: scorejson.winscore,
-            totalscore: scorejson.totalscore
+            totalscore: scorejson.totalscore,
+            timesvisited: 1
           }
         }, function(err, doc) {
           if (err) {
