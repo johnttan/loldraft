@@ -47,11 +47,15 @@ module.exports = (app)->
             res.render('draft.jade', {name: req.user.username})
         )
 
-    app.get('/autologin', passport.authenticate('local', {session: true}),
+    app.get('/autologin',
         (req, res)->
-                res.render('draft.jade', {name: req.user.username})
+            req.login(req.user, (err)->
+                if err
+                    res.send(404, 'not logged in')
+                else
+                    res.render('draft.jade', {name: req.user.username})
+            ))
 
-        )
 
     app.post('/checkusername', (req, res)->
         models.User.findOne({'username': req.body.username}, (err, doc)->

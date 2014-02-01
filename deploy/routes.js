@@ -55,11 +55,15 @@
         name: req.user.username
       });
     });
-    app.get('/autologin', passport.authenticate('local', {
-      session: true
-    }), function(req, res) {
-      return res.render('draft.jade', {
-        name: req.user.username
+    app.get('/autologin', function(req, res) {
+      return req.login(req.user, function(err) {
+        if (err) {
+          return res.send(404, 'not logged in');
+        } else {
+          return res.render('draft.jade', {
+            name: req.user.username
+          });
+        }
       });
     });
     app.post('/checkusername', function(req, res) {
