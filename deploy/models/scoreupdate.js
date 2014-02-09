@@ -31,15 +31,17 @@
   };
 
   updategoldscore = function(playerstat, game) {
-    var oppgold, player, score, _i, _len, _ref;
+    var oppgold, player, score, totalgold, _i, _len, _ref;
+    totalgold = 0;
     _ref = game.players;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       player = _ref[_i];
+      totalgold += player.total_gold;
       if (player.team !== playerstat.team & player.role === playerstat.role) {
         oppgold = player.total_gold;
       }
     }
-    score = scoring.goldscore(playerstat.total_gold, oppgold);
+    score = scoring.goldscore(playerstat.total_gold, totalgold, oppgold);
     return score;
   };
 

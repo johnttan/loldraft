@@ -47,12 +47,13 @@ csscore = (cs, oppcs, role) ->
 
     return score
 
-goldscore = (gold, oppgold) ->
+goldscore = (gold, totalgold, oppgold) ->
     scope = 
         gold: gold
+        totalgold: totalgold
         oppgold: oppgold
 
-    score = math.eval('(5 * (2*gold - oppgold)) / (gold + oppgold)', scope)
+    score = math.eval('(5 * (2*gold - oppgold)) / (totalgold)', scope)
 
     return score
 

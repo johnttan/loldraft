@@ -28,10 +28,12 @@ updatepartscore = (playerstat, game) ->
     return score
 
 updategoldscore = (playerstat, game) ->
+    totalgold = 0
     for player in game.players
-        if player.team != playerstat.team & player.role == playerstat.role
-            oppgold = player.total_gold
-    score = scoring.goldscore(playerstat.total_gold, oppgold)
+            totalgold += player.total_gold
+            if player.team != playerstat.team & player.role == playerstat.role
+                oppgold = player.total_gold
+    score = scoring.goldscore(playerstat.total_gold, totalgold, oppgold)
 
     return score
 

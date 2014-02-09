@@ -1,11 +1,9 @@
 (function() {
-  var ensureLogin, models, passport, sendgames, validator;
+  var ensureLogin, models, passport, validator;
 
   passport = require('passport');
 
   models = require('./models/data').models;
-
-  sendgames = require('./models/sendgames');
 
   validator = require('validator');
 
@@ -130,7 +128,7 @@
               return console.log(err);
             }
             if (user.roster.length < 5) {
-              user.roster.push(player);
+              user.roster.push(player['_id']);
               player.owner = user;
             }
             if (user.rosterarray.length < 5) {

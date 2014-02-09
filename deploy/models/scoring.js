@@ -65,13 +65,14 @@
     return score;
   };
 
-  goldscore = function(gold, oppgold) {
+  goldscore = function(gold, totalgold, oppgold) {
     var scope, score;
     scope = {
       gold: gold,
+      totalgold: totalgold,
       oppgold: oppgold
     };
-    score = math["eval"]('(5 * (2*gold - oppgold)) / (gold + oppgold)', scope);
+    score = math["eval"]('(5 * (2*gold - oppgold)) / (totalgold)', scope);
     return score;
   };
 
