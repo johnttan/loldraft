@@ -43,12 +43,12 @@
       }
     });
     app.get('/logout', function(req, res) {
-      req.logout();
-      return res.redirect('/');
+      return req.session.destroy(function(err) {
+        req.logout();
+        return res.redirect('/');
+      });
     });
-    app.post('/login', passport.authenticate('local', {
-      session: true
-    }), function(req, res) {
+    app.post('/login', passport.authenticate('local'), function(req, res) {
       return res.render('draft.jade', {
         name: req.user.username
       });

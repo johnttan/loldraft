@@ -159,7 +159,7 @@
     };
     $('.contactus').click(function(e) {
       e.preventDefault();
-      return $('.contactus').html('team@fantasylol.net');
+      return $('.contactus').html('team@leaguedrafted.com');
     });
     $('#loginpassword').keypress(function(e) {
       var password, username;
@@ -398,7 +398,7 @@
     };
     $.ajax({
       url: '/autologin',
-      cache: true,
+      cache: false,
       type: "GET",
       datatype: 'html',
       success: processRegistration,

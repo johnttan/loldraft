@@ -38,10 +38,13 @@ module.exports = (app)->
     )
 
     app.get('/logout', (req, res)->
-            req.logout()
-            res.redirect('/')
+            req.session.destroy((err)->
+                req.logout()
+                res.redirect('/')
+                )
+
             )
-    app.post('/login', passport.authenticate('local', {session: true}),
+    app.post('/login', passport.authenticate('local'),
         (req, res)->
             res.render('draft.jade', {name: req.user.username})
         )

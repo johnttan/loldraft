@@ -152,7 +152,7 @@ $ ->
     $('.contactus').click(
         (e)->
             e.preventDefault()
-            $('.contactus').html('team@fantasylol.net')
+            $('.contactus').html('team@leaguedrafted.com')
         )
     $('#loginpassword').keypress((e)->
         if e.which == 13
@@ -366,7 +366,7 @@ $ ->
             )
     $.ajax(
                 url: '/autologin'
-                cache: true
+                cache: false
                 type: "GET"
                 datatype: 'html'
                 success: processRegistration
