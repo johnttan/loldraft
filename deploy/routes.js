@@ -102,51 +102,49 @@
         if (err) {
           return console.log(err);
         }
-        return user.populate('roster', function(err, user) {
-          return res.json(user.roster);
-        });
+        if (user.roster === void 0) {
+          return res.send(404, 'no roster');
+        } else {
+          return user.populate('roster.top roster.mid roster.jungle roster.adc roster.support', function(err, user) {
+            return res.json(user.roster);
+          });
+        }
       });
     });
     return app.post('/draftplayers', ensureLogin('/'), function(req, res) {
       return models.User.findOne({
         'username': req.user.username
       }, function(err, user) {
-        var play, role, _ref, _results;
+        var play, role, rosterarray, _ref;
         if (err) {
           return console.log(err);
         }
-        user.roster = [];
-        user.rosterarray = [];
+        rosterarray = [];
         _ref = req.body;
-        _results = [];
         for (role in _ref) {
           play = _ref[role];
-          _results.push(models.Player.findOne({
-            'playername': play
-          }, function(err, player) {
-            if (err) {
-              return console.log(err);
-            }
-            if (user.roster.length < 5) {
-              user.roster.push(player['_id']);
-              player.owner = user;
-            }
-            if (user.rosterarray.length < 5) {
-              user.rosterarray.push(player.playername);
-            }
-            return user.save(function(err, user) {
-              return player.save(function(err, player) {
-                if (user.rosterarray.length === 5) {
-                  return user.populate('roster', function(err, user) {
-                    console.log(user.roster);
-                    return res.json(user.roster);
-                  });
-                }
-              });
-            });
-          }));
+          rosterarray.push(play);
         }
-        return _results;
+        return models.Player.aggregate({
+          $match: {
+            playername: {
+              $in: rosterarray
+            }
+          }
+        }).exec(function(err, result) {
+          var player, _i, _len;
+          for (_i = 0, _len = result.length; _i < _len; _i++) {
+            player = result[_i];
+            console.log(player);
+            if (user.roster === void 0) {
+              user.roster = {};
+            }
+            user.roster[player['role']] = player['_id'];
+          }
+          return user.save(function(err, result) {
+            return res.redirect('/roster');
+          });
+        });
       });
     });
   };

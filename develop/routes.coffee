@@ -92,9 +92,12 @@ module.exports = (app)->
             models.User.findOne({'username': req.user.username}, (err,user)->
                 if err
                     return console.log(err)
-                user.populate('roster', (err, user)->
-                                            res.json(user.roster)
-                                            )
+                if user.roster == undefined
+                    return res.send(404, 'no roster')
+                else
+                    user.populate('roster.top roster.mid roster.jungle roster.adc roster.support', (err, user)->
+                                                    return res.json(user.roster)
+                                                )
             ))
 
     app.post('/draftplayers',
@@ -104,30 +107,34 @@ module.exports = (app)->
             models.User.findOne({'username': req.user.username}, (err,user)->
                 if err
                     return console.log(err)
-                user.roster = []
-                user.rosterarray = []
+                rosterarray = []
                 for role, play of req.body
-                    models.Player.findOne({'playername': play}, (err, player)->
-                        if err
-                            return console.log(err)
-                        if user.roster.length < 5
-                            user.roster.push (player['_id'])
-                            player.owner = user
-                        if user.rosterarray.length < 5
-                            user.rosterarray.push(player.playername)
-                        user.save((err, user)->
-                            player.save((err, player)->
-                                if user.rosterarray.length == 5
-                                        user.populate('roster', (err, user)->
-                                                console.log(user.roster)
-                                                return res.json(user.roster)
-                                                
-                                            
-                                            )
-                                )
-                                    
+                    rosterarray.push(play)
+                models.Player.aggregate({
+                    $match: {playername:{$in: rosterarray}}
+                    }).exec((err, result)->
+                        for player in result
+                            console.log(player)
+                            if user.roster == undefined
+                                user.roster = {}
+                            user.roster[player['role']] = player['_id']
+                        user.save((err, result)->
+                            res.redirect('/roster')
                             )
                         )
-                    ))
+
+                # for role, play of req.body
+                #     models.Player.findOne({'playername': play}, (err, player)->
+                #         if err
+                #             return console.log(err)
+                #         user.roster.push (player['_id'])
+                #         player.owner = user
+                #         user.rosterarray.push(player.playername)
+                #         user.save()
+                #                 )
+                                    
+                            
+                    
+                ))
 
         

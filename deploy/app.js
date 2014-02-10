@@ -13,7 +13,7 @@
 
   ensureLogin = require('connect-ensure-login').ensureLoggedIn;
 
-  mongoose.connect('mongodb://localhost/test');
+  mongoose.connect('***REMOVED***');
 
   db = mongoose.connection;
 

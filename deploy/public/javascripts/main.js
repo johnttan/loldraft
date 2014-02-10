@@ -288,25 +288,24 @@
       return delta;
     };
     populateroster = function(data) {
-      var player, _i, _len;
+      var player, role;
       console.log(data);
-      if (JSON.stringify(data) === '[]') {
+      if (JSON.stringify(data) === '{}' || data === 'undefined') {
         return $('#draftteam').show(100);
       } else {
-        for (_i = 0, _len = data.length; _i < _len; _i++) {
-          player = data[_i];
-          console.log('.playername' + player.role);
-          $('.playername' + player.role).text(player.playername);
-          $('.pure-u-1-5.' + player.role + ' .kda .score').text(Math.round(player.scores.kdascore * 10) / 10);
-          $('.pure-u-1-5.' + player.role + ' .kda .percent').text(Math.round(calcdelta(player, 'kda')) + '%');
-          $('.pure-u-1-5.' + player.role + ' .gold .score').text(Math.round(player.scores.goldscore * 10) / 10);
-          $('.pure-u-1-5.' + player.role + ' .gold .percent').text(Math.round(calcdelta(player, 'gold')) + '%');
-          $('.pure-u-1-5.' + player.role + ' .part .score').text(Math.round(player.scores.partscore * 10) / 10);
-          $('.pure-u-1-5.' + player.role + ' .part .percent').text(Math.round(calcdelta(player, 'part')) + '%');
-          $('.pure-u-1-5.' + player.role + ' .cs .score').text(Math.round(player.scores.csscore * 10) / 10);
-          $('.pure-u-1-5.' + player.role + ' .cs .percent').text(Math.round(calcdelta(player, 'cs')) + '%');
-          $('.pure-u-1-5.' + player.role + ' .total .score').text(Math.round(player.scores.totalscore * 10) / 10);
-          $('.pure-u-1-5.' + player.role + ' .total .percent').text(Math.round(calcdelta(player, 'total')) + '%');
+        for (role in data) {
+          player = data[role];
+          $('.playername' + role).text(player.playername);
+          $('.pure-u-1-5.' + role + ' .kda .score').text(Math.round(player.scores.kdascore * 10) / 10);
+          $('.pure-u-1-5.' + role + ' .kda .percent').text(Math.round(calcdelta(player, 'kda')) + '%');
+          $('.pure-u-1-5.' + role + ' .gold .score').text(Math.round(player.scores.goldscore * 10) / 10);
+          $('.pure-u-1-5.' + role + ' .gold .percent').text(Math.round(calcdelta(player, 'gold')) + '%');
+          $('.pure-u-1-5.' + role + ' .part .score').text(Math.round(player.scores.partscore * 10) / 10);
+          $('.pure-u-1-5.' + role + ' .part .percent').text(Math.round(calcdelta(player, 'part')) + '%');
+          $('.pure-u-1-5.' + role + ' .cs .score').text(Math.round(player.scores.csscore * 10) / 10);
+          $('.pure-u-1-5.' + role + ' .cs .percent').text(Math.round(calcdelta(player, 'cs')) + '%');
+          $('.pure-u-1-5.' + role + ' .total .score').text(Math.round(player.scores.totalscore * 10) / 10);
+          $('.pure-u-1-5.' + role + ' .total .percent').text(Math.round(calcdelta(player, 'total')) + '%');
         }
         return $('#roster').show(100);
       }
@@ -354,7 +353,8 @@
           datatype: 'json',
           success: populateroster,
           error: function(jqxr, status, error) {
-            return console.log(jqxr.responseText);
+            console.log(jqxr.responseText);
+            return $('#draftteam').show(100);
           }
         });
       };

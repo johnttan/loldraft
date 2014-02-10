@@ -235,7 +235,13 @@ playerSchema = new Schema(
 
 userSchema = new Schema(
     email: String,
-    roster: [{type: Schema.Types.ObjectId, ref: 'Player'}]
+    roster: {
+        top: {type: Schema.Types.ObjectId, ref: 'Player'}
+        mid: {type: Schema.Types.ObjectId, ref: 'Player'}
+        jungle: {type: Schema.Types.ObjectId, ref: 'Player'}
+        adc: {type: Schema.Types.ObjectId, ref: 'Player'}
+        support: {type: Schema.Types.ObjectId, ref: 'Player'}
+    }
     rosterarray: Array
     )
 userSchema.plugin(passportLocalMongoose)

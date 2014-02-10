@@ -83,6 +83,7 @@ players = {
     'Mr RalleZ': ['adc', 'Supa Hot Crew XD']
     Migxa: ['support', 'Supa Hot Crew XD']
     Chauster: ['mid', 'CLG']
+    Saintvicious: ['support', 'Curse']
     }
 
 
