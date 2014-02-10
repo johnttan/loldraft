@@ -73,6 +73,10 @@ module.exports = function(grunt) {
                 {
                     src: 'develop/views/draftteam.jade',
                     dest:'deploy/views/draftteam.jade'
+                },
+                {
+                    src: 'develop/views/ranking.jade',
+                    dest:'deploy/views/ranking.jade'
                 }
 
                 ]

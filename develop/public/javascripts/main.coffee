@@ -285,7 +285,17 @@ $ ->
                 $('.pure-u-1-5.' + role + ' .total .percent').text(Math.round(calcdelta(player, 'total')) + '%')
 
             $('#roster').show(100)
+            $('#rosterclick').on('click', ()->
+                    $('.rostermenu').addClass('menu-item-divided pure-menu-selected')
+                    $('.rankmenu').removeClass('menu-item-divided pure-menu-selected')
+                    $('#ranking').hide()
+                    $('#roster').show(100)
+                    )
+    processRanking = (ranks)->
+        $('.rankspin').hide()
+        $('#rankingcontainer').html(ranks)
 
+    
     processRegistration = (data) ->
         $('#loginerror').text('')
         $('#loginusername').fadeOut(50)
@@ -313,8 +323,26 @@ $ ->
             setupauto()
             $('#draftnow').click(draftteam)
             $('#roster').hide()
+            $('#ranking').hide()
             $('#draftteam').hide()
             $('.deck').fadeIn()
+            $('#rankclick').on('click', ()->
+                    console.log('rank?')
+                    $('.rostermenu').removeClass('menu-item-divided pure-menu-selected')
+                    $('.rankmenu').addClass('menu-item-divided pure-menu-selected')
+                    $('#roster').hide()
+                    $('#ranking').show()
+                    $('.rankspin').show(100)
+                    $.ajax(
+                        url: '/rankings'
+                        cache: false
+                        type: "GET"
+                        success: processRanking
+                        error: (jqxr, status, error)->
+                            $('#ranking').text('Server Error')
+                            $('#ranking').show()
+                    
+                    ))
             $('#menu').animate({'margin-top':'39px'})
             $.ajax(
                 url: '/roster'
@@ -345,6 +373,8 @@ $ ->
                 error: (jqxr, status, error)->
                     console.log('not logged in')
                     )
+
+
     validator = $('#signupform').validate({
         debug: true
         rules:{

@@ -111,7 +111,7 @@
         }
       });
     });
-    return app.post('/draftplayers', ensureLogin('/'), function(req, res) {
+    app.post('/draftplayers', ensureLogin('/'), function(req, res) {
       return models.User.findOne({
         'username': req.user.username
       }, function(err, user) {
@@ -140,9 +140,42 @@
               user.roster = {};
             }
             user.roster[player['role']] = player['_id'];
+            user.rosterarray = rosterarray;
           }
           return user.save(function(err, result) {
             return res.redirect('/roster');
+          });
+        });
+      });
+    });
+    return app.get('/rankings', ensureLogin('/'), function(req, res) {
+      return models.Player.aggregate({
+        $match: {}
+      }, {
+        $sort: {
+          'scores.totalscore': -1
+        }
+      }, {
+        $project: {
+          playername: 1,
+          teamname: 1,
+          'scores.totalscore': 1,
+          gamesplayed: 1,
+          role: 1
+        }
+      }).exec(function(err, result) {
+        return models.User.findOne({
+          'username': req.user.username
+        }, function(err, user) {
+          if (err) {
+            return console.log(err);
+          }
+          console.log(user.rosterarray);
+          console.log(typeof user.rosterarray[0]);
+          console.log(typeof result[0].playername);
+          return res.render('ranking', {
+            items: result,
+            rosterarray: user.rosterarray
           });
         });
       });

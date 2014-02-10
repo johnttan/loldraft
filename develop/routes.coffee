@@ -118,6 +118,7 @@ module.exports = (app)->
                             if user.roster == undefined
                                 user.roster = {}
                             user.roster[player['role']] = player['_id']
+                            user.rosterarray = rosterarray
                         user.save((err, result)->
                             res.redirect('/roster')
                             )
@@ -136,5 +137,32 @@ module.exports = (app)->
                             
                     
                 ))
+    
+    app.get('/rankings',
+        ensureLogin('/'),
+        (req, res)->
+            models.Player.aggregate(
+                {$match: {}},
+                {$sort: {'scores.totalscore': -1}},
+                {$project: {
+                    playername: 1
+                    teamname: 1
+                    'scores.totalscore': 1
+                    gamesplayed: 1
+                    role: 1
+                        }}
 
+                ).exec((err, result)->
+                    models.User.findOne({'username': req.user.username}, (err, user)->
+                        if err
+                            return console.log(err)
+                        console.log(user.rosterarray)
+                        console.log(typeof(user.rosterarray[0]))
+                        console.log(typeof(result[0].playername))
+                        res.render('ranking', {items: result, rosterarray: user.rosterarray})
+                        )
+                        
+
+                    )
+        )
         

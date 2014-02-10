@@ -1,0 +1,28 @@
+h1.greeting.content-head.is-center
+    |Ranking
+h5.greeting.content-head.is-center
+    |Your Roster in Blue
+hr.fancy-line1
+
+.rankingcontainer
+    table.pure-table.pure-table-bordered
+        tbody
+            //- tr= items
+
+            each player, i in items
+                if rosterarray.indexOf(player.playername) > -1
+                    tr.owned
+                        td= i+1
+                        td= player.playername  + ' | ' + player.role
+                        td= player.teamname
+                        td= (Math.round(player.scores.totalscore *10) / 10)
+                        td= 'avg | ' + (Math.round(player.scores.totalscore/player.gamesplayed.length * 100) / 100)
+                        td= 'games | ' + player.gamesplayed.length
+                else
+                    tr
+                        td= i+1
+                        td= player.playername  + ' | ' + player.role
+                        td= player.teamname
+                        td= (Math.round(player.scores.totalscore *10) / 10)
+                        td= 'avg | ' + (Math.round(player.scores.totalscore/player.gamesplayed.length * 100) / 100)
+                        td= 'games | ' + player.gamesplayed.length

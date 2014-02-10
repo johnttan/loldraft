@@ -2,7 +2,7 @@
   var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   $(function() {
-    var adcplayers, calcdelta, draftteam, info, jungleplayers, key, midplayers, playerinfo, populateroster, processRegistration, processSuccessDraft, setupauto, supportplayers, topplayers, validator;
+    var adcplayers, calcdelta, draftteam, info, jungleplayers, key, midplayers, playerinfo, populateroster, processRanking, processRegistration, processSuccessDraft, setupauto, supportplayers, topplayers, validator;
     playerinfo = {
       Cruzerthebruzer: ['top', 'Dignitas'],
       Crumbzz: ['jungle', 'Dignitas'],
@@ -307,8 +307,18 @@
           $('.pure-u-1-5.' + role + ' .total .score').text(Math.round(player.scores.totalscore * 10) / 10);
           $('.pure-u-1-5.' + role + ' .total .percent').text(Math.round(calcdelta(player, 'total')) + '%');
         }
-        return $('#roster').show(100);
+        $('#roster').show(100);
+        return $('#rosterclick').on('click', function() {
+          $('.rostermenu').addClass('menu-item-divided pure-menu-selected');
+          $('.rankmenu').removeClass('menu-item-divided pure-menu-selected');
+          $('#ranking').hide();
+          return $('#roster').show(100);
+        });
       }
+    };
+    processRanking = function(ranks) {
+      $('.rankspin').hide();
+      return $('#rankingcontainer').html(ranks);
     };
     processRegistration = function(data) {
       var animatelogout, fadeindraft;
@@ -341,8 +351,27 @@
         setupauto();
         $('#draftnow').click(draftteam);
         $('#roster').hide();
+        $('#ranking').hide();
         $('#draftteam').hide();
         $('.deck').fadeIn();
+        $('#rankclick').on('click', function() {
+          console.log('rank?');
+          $('.rostermenu').removeClass('menu-item-divided pure-menu-selected');
+          $('.rankmenu').addClass('menu-item-divided pure-menu-selected');
+          $('#roster').hide();
+          $('#ranking').show();
+          $('.rankspin').show(100);
+          return $.ajax({
+            url: '/rankings',
+            cache: false,
+            type: "GET",
+            success: processRanking,
+            error: function(jqxr, status, error) {
+              $('#ranking').text('Server Error');
+              return $('#ranking').show();
+            }
+          });
+        });
         $('#menu').animate({
           'margin-top': '39px'
         });

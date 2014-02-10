@@ -19,7 +19,8 @@
     "passport": "*",
     "passport-local": "*",
     "validator": "*",
-    "connect-ensure-login": "*"
+    "connect-ensure-login": "*",
+    "bson": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.2",

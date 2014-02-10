@@ -56,7 +56,7 @@ app.configure "production", ->
 
 require('./routes')(app)
 
-app.listen 8081
+app.listen 8080
 console.log "Express server listening on port 3000"
 
 )

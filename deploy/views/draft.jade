@@ -13,8 +13,11 @@ body
       .pure-menu.pure-menu-open
         a.pure-menu-heading#name(href='#') #{name}
         ul
-          li.menu-item-divided.pure-menu-selected
-            a(href='#roster') Roster
+          li.menu-item-divided.pure-menu-selected.rostermenu
+            a#rosterclick(href='#roster') Roster
+          li.rankmenu
+            a#rankclick(href='#rank') Ranking
+            
           li
             a(href='#sched') Schedule
           li
@@ -31,6 +34,9 @@ body
           include roster
         container.is-center#draftteam
           include draftteam
+        container.is-center#ranking
+          container.fa.fa-spinner.fa-spin.fa-5x.rankspin
+          container#rankingcontainer
 
 
 
