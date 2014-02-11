@@ -81,6 +81,7 @@ $ ->
         Moopz: ['mid', 'Supa Hot Crew XD']
         'Mr RalleZ': ['adc', 'Supa Hot Crew XD']
         Migxa: ['support', 'Supa Hot Crew XD']
+        dexter: ['jungle', 'CLG']
     }
     topplayers = []
     midplayers = []
@@ -381,7 +382,7 @@ $ ->
             name: {
                 required: true
                 minlength: 2
-                maxlength: 50
+                maxlength: 15
                 remote: {
                     url: "checkusername"
                     type: "post"
