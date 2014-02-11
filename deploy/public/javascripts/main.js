@@ -447,7 +447,7 @@
         name: {
           required: "Summoner Name please! :)",
           minlength: $.format("No way your name is shorter than {0} characters!"),
-          maxlength: $.format("No way your name is that longer than {0} characters!"),
+          maxlength: $.format("No way your name is longer than {0} characters!"),
           remote: $.format("Someone has taken {0}!")
         },
         password: {
