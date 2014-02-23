@@ -162,7 +162,22 @@ module.exports = (app)->
                         console.log(user.rosterarray)
                         console.log(typeof(user.rosterarray[0]))
                         console.log(typeof(result[0].playername))
-                        res.render('ranking', {items: result, rosterarray: user.rosterarray})
+                        models.User.aggregate(
+                                {$match: {}},
+                                {$sort: {totaluserscore: -1}}
+                                {$project: {
+                                    username: 1
+                                    rosterarray: 1
+                                    totaluserscore: 1
+                                    }}
+
+                            ).exec((err, userlist)->
+                                    ownedplayers = []
+                                    for user1 in userlist
+                                        ownedplayers += user1.rosterarray
+                                    res.render('ranking', {items: result, yourname: user.username, rosterarray: user.rosterarray, userlist: userlist, ownedplayers: ownedplayers, mytotalscore: user.totaluserscore})
+                                )
+                        
                         )
                         
 

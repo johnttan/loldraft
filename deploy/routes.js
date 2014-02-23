@@ -173,9 +173,33 @@
           console.log(user.rosterarray);
           console.log(typeof user.rosterarray[0]);
           console.log(typeof result[0].playername);
-          return res.render('ranking', {
-            items: result,
-            rosterarray: user.rosterarray
+          return models.User.aggregate({
+            $match: {}
+          }, {
+            $sort: {
+              totaluserscore: -1
+            }
+          }, {
+            $project: {
+              username: 1,
+              rosterarray: 1,
+              totaluserscore: 1
+            }
+          }).exec(function(err, userlist) {
+            var ownedplayers, user1, _i, _len;
+            ownedplayers = [];
+            for (_i = 0, _len = userlist.length; _i < _len; _i++) {
+              user1 = userlist[_i];
+              ownedplayers += user1.rosterarray;
+            }
+            return res.render('ranking', {
+              items: result,
+              yourname: user.username,
+              rosterarray: user.rosterarray,
+              userlist: userlist,
+              ownedplayers: ownedplayers,
+              mytotalscore: user.totaluserscore
+            });
           });
         });
       });

@@ -1,5 +1,17 @@
+
+
 h1.greeting.content-head.is-center
-    |Ranking
+    |Summoner Rankings
+hr.fancy-line1
+.rostercontainer
+    each user, i in userlist
+                    h5.content-head.is-center.kda.ranking
+                        span.score1#score1=  + i + 1 + ' - '
+                        span.scoretitle= user.username + ' '
+                        span.score= Math.round(user.totaluserscore * 100)/100 + ' '
+
+h1.greeting.content-head.is-center
+    |Player Rankings
 h5.greeting.content-head.is-center
     |Your Roster in Blue
 hr.fancy-line1
@@ -12,6 +24,7 @@ hr.fancy-line1
             each player, i in items
                 if rosterarray.indexOf(player.playername) > -1
                     tr.owned
+                        td= yourname
                         td= i+1
                         td= player.playername  + ' | ' + player.role
                         td= player.teamname
@@ -19,10 +32,23 @@ hr.fancy-line1
                         td= 'avg | ' + (Math.round(player.scores.totalscore/player.gamesplayed.length * 100) / 100)
                         td= 'games | ' + player.gamesplayed.length
                 else
-                    tr
-                        td= i+1
-                        td= player.playername  + ' | ' + player.role
-                        td= player.teamname
-                        td= (Math.round(player.scores.totalscore *10) / 10)
-                        td= 'avg | ' + (Math.round(player.scores.totalscore/player.gamesplayed.length * 100) / 100)
-                        td= 'games | ' + player.gamesplayed.length
+                    if ownedplayers.indexOf(player.playername) > -1
+                        each user in userlist
+                            if user.rosterarray.indexOf(player.playername) > -1
+                                tr.ownedby(ownedby = user.username)
+                                    td=user.username
+                                    td= i+1
+                                    td= player.playername  + ' | ' + player.role
+                                    td= player.teamname
+                                    td= (Math.round(player.scores.totalscore *10) / 10)
+                                    td= 'avg | ' + (Math.round(player.scores.totalscore/player.gamesplayed.length * 100) / 100)
+                                    td= 'games | ' + player.gamesplayed.length
+                    else
+                        tr
+                            td Free Agent
+                            td= i+1
+                            td= player.playername  + ' | ' + player.role
+                            td= player.teamname
+                            td= (Math.round(player.scores.totalscore *10) / 10)
+                            td= 'avg | ' + (Math.round(player.scores.totalscore/player.gamesplayed.length * 100) / 100)
+                            td= 'games | ' + player.gamesplayed.length

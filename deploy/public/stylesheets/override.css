@@ -10,7 +10,7 @@ hr.fancy-line1{border:0;background:-webkit-gradient(linear, left bottom, right t
 #main{height:100%;}
 #main .pure-g-r.is-center{height:100%}
 .role{color:#00a6fc}
-h3.content-head.is-center.role,h2.content-head.is-center.playernametop,h2.content-head.is-center.playernamemid,h2.content-head.is-center.playernamejungle,h2.content-head.is-center.playernameadc,h2.content-head.is-center.playernamesupport,h5.content-head.is-center.cumulative,h5.content-head.is-center.kda,h5.content-head.is-center.part,h5.content-head.is-center.gold,h5.content-head.is-center.cs,h5.content-head.is-center.total,#draftteam,#ranking,table.pure-table.pure-table-bordered{margin-left:auto;margin-right:auto}
+h3.content-head.is-center.role,h2.content-head.is-center.playernametop,h2.content-head.is-center.playernamemid,h2.content-head.is-center.playernamejungle,h2.content-head.is-center.playernameadc,h2.content-head.is-center.playernamesupport,h5.content-head.is-center.cumulative,h5.content-head.is-center.kda,h5.content-head.is-center.part,h5.content-head.is-center.gold,h5.content-head.is-center.cs,h5.content-head.is-center.total,#draftteam,#ranking,.pure-g-r.is-center,.pure-u-1-5.top,.pure-g-r.roster.is-center,h5.content-head.is-center.kda,.pure-u.top,.pure-g-r.is-center,table.pure-table.pure-table-bordered{margin-left:auto;margin-right:auto}
 h3.content-head.is-center.role,h2.content-head.is-center.playername{margin-bottom:0;margin-top:5}
 #draftteam,#ranking,table.pure-table.pure-table-bordered{width:100%;height:100%;margin-left:auto;margin-right:auto}
 div.pure-g-r.mid.is-center{margin-left:auto;margin-right:auto}
@@ -27,3 +27,8 @@ h2.content-head.is-center.playernametop,h2.content-head.is-center.playernamemid,
 #loginpassword{margin-left:5px}
 #loginerror{color:#b44326}
 .owned{background-color:#add8e6}
+.ownedby{background-color:#90ee90}
+table{text-align:right}
+span.score1#score1{color:#00a6fc;font-size:x-large}
+span.scoretitle1{color:#7fc028}
+h5.content-head.is-center.kda.ranking{font-size:medium}
