@@ -81,7 +81,12 @@ $ ->
         Moopz: ['mid', 'Supa Hot Crew XD']
         'Mr RalleZ': ['adc', 'Supa Hot Crew XD']
         Migxa: ['support', 'Supa Hot Crew XD']
-        dexter: ['jungle', 'CLG']
+        dexter: ['jungle', 'CLG'],
+        Nickwu: ['jungle', 'XDG'],
+        Zorozero: ['top', 'Gambit'],
+        Nukeduck: ['mid', 'Gambit'],
+        Hulberto: ['jungle', 'Gambit'],
+        fury: ['adc', 'Gambit']
     }
     topplayers = []
     midplayers = []
