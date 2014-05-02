@@ -111,6 +111,22 @@
         }
       });
     });
+    app.get('/rosterjsontest', function(req, res) {
+      return models.User.findOne({
+        'username': 'ostonzi'
+      }, function(err, user) {
+        if (err) {
+          return console.log(err);
+        }
+        if (user.roster === void 0) {
+          return res.send(404, 'no roster');
+        } else {
+          return user.populate('roster.top roster.mid roster.jungle roster.adc roster.support', function(err, user) {
+            return res.json(user.roster);
+          });
+        }
+      });
+    });
     app.post('/draftplayers', ensureLogin('/'), function(req, res) {
       return models.User.findOne({
         'username': req.user.username

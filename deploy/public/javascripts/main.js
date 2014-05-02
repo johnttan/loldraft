@@ -89,7 +89,13 @@
       Zorozero: ['top', 'Gambit'],
       Nukeduck: ['mid', 'Gambit'],
       Hulberto: ['jungle', 'Gambit'],
-      fury: ['adc', 'Gambit']
+      fury: ['adc', 'Gambit'],
+      Sheep: ['support', 'XDG'],
+      Reginald: ['mid', 'TSM'],
+      SELFIE: ['mid', 'Supa Hot Crew XD'],
+      ROBERTxLEE: ['adc', 'Evil Geniuses'],
+      Ken: ['support', 'Evil Geniuses'],
+      Thinkcard: ['jungle', 'Evil Geniuses']
     };
     topplayers = [];
     midplayers = [];

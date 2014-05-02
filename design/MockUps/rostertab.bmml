@@ -1,0 +1,106 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1458" measuredH="852" mockupW="1398" mockupH="832">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="60" y="20" w="1398" h="832" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>A%20Web%20Page%0Ahttp%3A//</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::VerticalTabBar" x="60" y="92" w="1398" h="735" measuredW="200" measuredH="302" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>2</selectedIndex>
+        <text>Name%0A%20%0ARoster%0ARankings%0ASchedule%0AStatistics%0A%20%0AContact%20Us</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Canvas" x="136" y="116" w="263" h="708" measuredW="100" measuredH="70" zOrder="2" locked="false" isInGroup="-1"/>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::Canvas" x="399" y="116" w="263" h="708" measuredW="100" measuredH="70" zOrder="3" locked="false" isInGroup="-1"/>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::Canvas" x="662" y="116" w="263" h="708" measuredW="100" measuredH="70" zOrder="4" locked="false" isInGroup="-1"/>
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::Canvas" x="925" y="116" w="263" h="708" measuredW="100" measuredH="70" zOrder="5" locked="false" isInGroup="-1"/>
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::Canvas" x="1188" y="116" w="263" h="708" measuredW="100" measuredH="70" zOrder="6" locked="false" isInGroup="-1"/>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Title" x="178" y="140" w="174" h="-1" measuredW="174" measuredH="43" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Mr.%20Rallez</text>
+      </controlProperties>
+    </control>
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::SubTitle" x="205" y="182" w="114" h="-1" measuredW="114" measuredH="27" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Marksman</text>
+      </controlProperties>
+    </control>
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::Title" x="443" y="140" w="159" h="-1" measuredW="159" measuredH="43" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>CowTard</text>
+      </controlProperties>
+    </control>
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::SubTitle" x="503" y="182" w="38" h="-1" measuredW="38" measuredH="27" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Mid</text>
+      </controlProperties>
+    </control>
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::Title" x="730" y="140" w="127" h="-1" measuredW="127" measuredH="43" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Jankos</text>
+      </controlProperties>
+    </control>
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::SubTitle" x="756" y="182" w="74" h="-1" measuredW="74" measuredH="27" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Jungle</text>
+      </controlProperties>
+    </control>
+    <control controlID="26" controlTypeID="com.balsamiq.mockups::Title" x="966" y="140" w="198" h="-1" measuredW="198" measuredH="43" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>HotshotGG</text>
+      </controlProperties>
+    </control>
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::SubTitle" x="1036" y="182" w="40" h="-1" measuredW="40" measuredH="27" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Top</text>
+      </controlProperties>
+    </control>
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::Title" x="1269" y="140" w="101" h="-1" measuredW="101" measuredH="43" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Swag</text>
+      </controlProperties>
+    </control>
+    <control controlID="29" controlTypeID="com.balsamiq.mockups::SubTitle" x="1276" y="182" w="87" h="-1" measuredW="87" measuredH="27" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Support</text>
+      </controlProperties>
+    </control>
+    <control controlID="67" controlTypeID="com.balsamiq.mockups::HRule" x="205" y="209" w="-1" h="-1" measuredW="100" measuredH="10" zOrder="17" locked="false" isInGroup="-1"/>
+    <control controlID="68" controlTypeID="com.balsamiq.mockups::Button" x="1363" y="92" w="85" h="27" measuredW="63" measuredH="27" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Logout</text>
+      </controlProperties>
+    </control>
+    <control controlID="69" controlTypeID="com.balsamiq.mockups::Label" x="151" y="95" w="-1" h="-1" measuredW="164" measuredH="21" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Fantasy%20League%20Draft%202014</text>
+      </controlProperties>
+    </control>
+    <control controlID="70" controlTypeID="com.balsamiq.mockups::List" x="156" y="234" w="199" h="326" measuredW="100" measuredH="132" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Offense%20%7C%20250%20%5E50%25%201%3AEU%0ADefense%3A%20100%20%5E20%25%205%3AEU%0AAvg%20CS%3A%20100%20%5E6%25%204%3AEU%0AAvg%20KDA%3A%205.44%20%5E5%25%204%3AEU%0AAvg%20Gold%3A%205.44%20%5E3%25%204%3AEU%0AW/L%20%3A%205/5%204%3AEU</text>
+      </controlProperties>
+    </control>
+    <control controlID="71" controlTypeID="com.balsamiq.mockups::List" x="443" y="234" w="199" h="326" measuredW="100" measuredH="132" zOrder="21" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Offense%20%7C%20250%20%5E50%25%201%3AEU%0ADefense%3A%20100%20%5E20%25%205%3AEU%0AAvg%20CS%3A%20100%20%5E6%25%204%3AEU%0AAvg%20KDA%3A%205.44%20%5E5%25%204%3AEU%0AAvg%20Gold%3A%205.44%20%5E3%25%204%3AEU%0AW/L%20%3A%205/5%204%3AEU</text>
+      </controlProperties>
+    </control>
+    <control controlID="72" controlTypeID="com.balsamiq.mockups::List" x="711" y="234" w="199" h="326" measuredW="100" measuredH="132" zOrder="22" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Offense%20%7C%20250%20%5E50%25%201%3AEU%0ADefense%3A%20100%20%5E20%25%205%3AEU%0AAvg%20CS%3A%20100%20%5E6%25%204%3AEU%0AAvg%20KDA%3A%205.44%20%5E5%25%204%3AEU%0AAvg%20Gold%3A%205.44%20%5E3%25%204%3AEU%0AW/L%20%3A%205/5%204%3AEU</text>
+      </controlProperties>
+    </control>
+    <control controlID="73" controlTypeID="com.balsamiq.mockups::List" x="966" y="234" w="199" h="326" measuredW="100" measuredH="132" zOrder="23" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Offense%20%7C%20250%20%5E50%25%201%3AEU%0ADefense%3A%20100%20%5E20%25%205%3AEU%0AAvg%20CS%3A%20100%20%5E6%25%204%3AEU%0AAvg%20KDA%3A%205.44%20%5E5%25%204%3AEU%0AAvg%20Gold%3A%205.44%20%5E3%25%204%3AEU%0AW/L%20%3A%205/5%204%3AEU</text>
+      </controlProperties>
+    </control>
+    <control controlID="74" controlTypeID="com.balsamiq.mockups::List" x="1231" y="234" w="199" h="326" measuredW="100" measuredH="132" zOrder="24" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Offense%20%7C%20250%20%5E50%25%201%3AEU%0ADefense%3A%20100%20%5E20%25%205%3AEU%0AAvg%20CS%3A%20100%20%5E6%25%204%3AEU%0AAvg%20KDA%3A%205.44%20%5E5%25%204%3AEU%0AAvg%20Gold%3A%205.44%20%5E3%25%204%3AEU%0AW/L%20%3A%205/5%204%3AEU</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

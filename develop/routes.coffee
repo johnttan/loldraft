@@ -102,7 +102,18 @@ module.exports = (app)->
                                                     return res.json(user.roster)
                                                 )
             ))
-
+    app.get('/rosterjsontest',
+        (req, res)->
+            models.User.findOne({'username': 'ostonzi'}, (err,user)->
+                if err
+                    return console.log(err)
+                if user.roster == undefined
+                    return res.send(404, 'no roster')
+                else
+                    user.populate('roster.top roster.mid roster.jungle roster.adc roster.support', (err, user)->
+                                                    return res.json(user.roster)
+                                                )
+            ))
     app.post('/draftplayers',
         ensureLogin('/'),
         (req, res)->
