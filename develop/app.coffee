@@ -5,7 +5,7 @@ passport = require 'passport'
 LocalStrategy = require('passport-local').Strategy
 ensureLogin = require('connect-ensure-login').ensureLoggedIn
 
-mongoose.connect('***REMOVED***')
+mongoose.connect('mongodb://deploy:24catseatingtuna@ds027809.mongolab.com:27809/fantasydraft')
 #mongoose.connect('mongodb://localhost/test')
 
 db = mongoose.connection
@@ -27,7 +27,7 @@ app.configure ->
   app.use express.methodOverride()
   app.use express.session(
     {
-      secret: '***REMOVED***',
+      secret: '24lilmoomersunite',
       cookie: {maxAge: 20000000}
 
     }
@@ -56,7 +56,7 @@ app.configure "production", ->
 
 require('./routes')(app)
 
-app.listen 8081
+app.listen process.env.PORT || 8081 
 console.log "Express server listening on port 3000"
 
 )

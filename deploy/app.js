@@ -13,7 +13,7 @@
 
   ensureLogin = require('connect-ensure-login').ensureLoggedIn;
 
-  mongoose.connect('***REMOVED***');
+  mongoose.connect('mongodb://deploy:24catseatingtuna@ds027809.mongolab.com:27809/fantasydraft');
 
   db = mongoose.connection;
 
@@ -29,7 +29,7 @@
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(express.session({
-      secret: '***REMOVED***',
+      secret: '24lilmoomersunite',
       cookie: {
         maxAge: 20000000
       }
@@ -45,6 +45,6 @@
     }));
   }), app.configure("production", function() {
     return app.use(express.errorHandler());
-  }), require('./routes')(app), app.listen(8081), console.log("Express server listening on port 3000"));
+  }), require('./routes')(app), app.listen(process.env.PORT || 8081), console.log("Express server listening on port 3000"));
 
 }).call(this);

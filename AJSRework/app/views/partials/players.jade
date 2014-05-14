@@ -1,0 +1,30 @@
+//
+   Created by John Tan on 5/5/14.
+div.sortby Sort By
+div.ui.button(ng-click="changeSort('playername')") Name
+div.ui.button(ng-click="changeSort('teamname')") Team
+div.searchlist Search By
+div.ui.input
+    input(type="text" placeholder="Name" ng-model="searchname")
+div.ui.input
+    input(type="text" placeholder="Team" ng-model="searchteam")
+div.ui.input
+    input(type="text" placeholder="Role" ng-model="searchrole")
+div(ng-repeat="player in players | orderBy:sorting | filter: {playername: searchname, teamname: searchteam, role: searchrole}")
+    .ui.divider
+    .ui.header {{player.playername}}
+        .sub.header {{player.role}}
+        .sub.header {{player.teamname}}
+        .ui.button.small(ng-click="displaygames = !displaygames") View Games
+    table.pure-table.pure-table-bordered(ng-show="displaygames")
+        tbody
+            tr.item(ng-repeat="game in player.gamesplayed")
+                td.content
+                    .header GameID: {{game.gameID}}
+                    span.winningteam Winner | {{game.winteamname}}
+                    .ui.button(ng-click="viewscores = !viewscores") View Scores
+                    div(ng-show="viewscores")
+                            div(ng-repeat="player in game.players")
+                                    .header {{player.playername}}
+                                    div KDA {{player.kills}} | {{player.deaths}} | {{player.assists}}
+                                    div CS {{player.minion_kills}} | Gold {{player["total_gold"]}}

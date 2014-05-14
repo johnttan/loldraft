@@ -1,0 +1,24 @@
+//
+   Created by John Tan on 5/2/14.
+
+#layout
+    a#menuLink.menu-link(href='#menu')
+        span
+    #menu
+        ul
+        .pure-menu.pure-menu-open
+            a.pure-menu-heading#name(href='#') Ostonzi
+            ul
+                li(ng-class="{'pure-menu-selected': isActive('/players')}")
+                    a(href='/players') Players
+                li(ng-class="{'pure-menu-selected': isActive('/drafts')}")
+                    a(href='/drafts') Drafts
+                li(ng-class="{'pure-menu-selected': isActive('/games')}")
+                    a(href='/games') Games
+                li(ng-class="{'pure-menu-selected': isActive('/teams')}")
+                    a(href='/stats') Teams
+            footer.contact
+                a(href='#contact') Contact Us
+            footer.terms
+                a(href='#contact') Terms of Service
+

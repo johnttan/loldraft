@@ -7,7 +7,7 @@
 
   models = require('./data').models;
 
-  mongoose.connect('***REMOVED***');
+  mongoose.connect('mongodb://deploy:24catseatingtuna@ds027809.mongolab.com:27809/fantasydraft');
 
   latestgamereset = function() {
     return htmlparse.queryandretrieve.reset(1669, 1800);
