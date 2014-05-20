@@ -10,6 +10,9 @@ http://loldrafted.herokuapp.com/
 View the repo for the scraper scripts at:
 https://github.com/ostzi/lolesports_scraper
 
+MongoDB hosted by MongoLabs on free dev server.
+Original site hosted on Amazon EC2 micro instance. Demo is hosted on Heroku 1x dyno.
+
 Express/Node.js/Mongoose(MongoDB) in the back-end. jQuery, Pure CSS framework in the front.
 
 Coffeescript, Jade, Stylus used throughout, with Grunt tasks for auto-building on change.
